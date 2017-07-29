@@ -23,9 +23,16 @@ class BookListTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 100
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        ApiManager.shared.getProducts() { products, error in
+            if products == nil {
+                self.showErrorAlert(title: "Loading error", error: error)
+            } else {
+                self.tableView.reloadData()
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -35,21 +42,27 @@ class BookListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.count
+        return User.shared!.agenda!.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "book_cell", for: indexPath) as! BookTableViewCell
-        let data = self.data[indexPath.row]
-        cell.titleLabel.text = data.0
-        cell.informationLabel.text = data.1
-        cell.timeLabel.text = data.2
+        let book = User.shared!.agenda![indexPath.row]
+        cell.titleLabel.text = "\(book.products.first?.passengers.first?.lastName ?? "empty")"
+        cell.informationLabel.text = "\(book.products.first?.passengers.count ?? 0) people • \(book.products.first?.baggage ?? 0) bagages"
+        cell.timeLabel.text = "6.20 PM"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "book_details", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? BookDetailsTableViewController {
+            controller.product = User.shared!.agenda![self.tableView.indexPathForSelectedRow?.row ?? 0].products.first!
+        }
     }
 
 }

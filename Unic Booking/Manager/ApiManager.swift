@@ -90,9 +90,9 @@ class ApiManager {
                 }
                 do {
                     let decoder = JSONDecoder()
-                    let product = try decoder.decode([Product].self, from: jsonData)
-                    //DataManager.shared.productManager.push(objects: products)
-                    completionHandler(product, nil)
+                    let products = try decoder.decode([Product].self, from: jsonData)
+                    DataManager.shared.productManager.push(objects: products)
+                    completionHandler(products, nil)
                 } catch let error {
                     completionHandler(nil, error)
                 }
@@ -100,6 +100,43 @@ class ApiManager {
                 completionHandler(nil, error)
                 break
             }
+        }
+    }
+    
+    func list<Type: Model>(model: Type.Type, completionHandler: @escaping ([Type]?, Error?) -> Void) {
+        guard let endPoint = self.listEndPoint(model) else { return }
+        Alamofire.request(baseURL + endPoint, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers).validate().responseString { response in
+            switch response.result {
+            case .success:
+                guard let jsonData = response.result.value?.data(using: .utf8) else {
+                    completionHandler(nil, RequestError.encodageFailed)
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    let objects = try decoder.decode([Type].self, from: jsonData)
+                    let manager = DataManager.shared.manager(object: model)
+                    manager?.push(objects: objects)
+                    manager?.isLoaded = true
+                    completionHandler(objects, nil)
+                } catch let error {
+                    completionHandler(nil, error)
+                }
+            case .failure(let error):
+                completionHandler(nil, error)
+                break
+            }
+        }
+    }
+    
+    func listEndPoint(_ model: Model.Type) -> String? {
+        switch model {
+        case is Product.Type:
+            return "/product"
+        case is Book.Type:
+            return "/book"
+        default:
+            return nil
         }
     }
 }

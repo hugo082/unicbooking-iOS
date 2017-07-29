@@ -10,8 +10,8 @@ import Foundation
 
 struct TrainMetadata: Decodable {
     
-    let code: String
-    let station: String
-    let time: String
+    let code: String?
+    let station: String?
+    let time: String?
     
 }

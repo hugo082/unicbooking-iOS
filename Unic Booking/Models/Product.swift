@@ -29,13 +29,13 @@ class Product: Model {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.type = try container.decode(Base.self, forKey: .type)
-        self.note = try container.decode(String.self, forKey: .note)
+        self.note = try container.decodeIfPresent(String.self, forKey: .note)
         self.baggage = try container.decode(Int.self, forKey: .baggage)
         self.passengers = try container.decode([Passenger].self, forKey: .passengers)
         self.execution = try container.decode(Execution.self, forKey: .execution)
-        self.airport = try container.decode(AirportMetadata.self, forKey: .airport)
-        self.train = try container.decode(TrainMetadata.self, forKey: .train)
-        self.limousine = try container.decode(LimousineMetadata.self, forKey: .limousine)
+        self.airport = try container.decodeIfPresent(AirportMetadata.self, forKey: .airport)
+        self.train = try container.decodeIfPresent(TrainMetadata.self, forKey: .train)
+        self.limousine = try container.decodeIfPresent(LimousineMetadata.self, forKey: .limousine)
     }
 }
 
@@ -64,7 +64,7 @@ extension Product {
         let name: String
         let service: Service
     }
-    struct Passenger {
+    struct Passenger: Model {
         let id: Int
         let firstName: String
         let lastName: String

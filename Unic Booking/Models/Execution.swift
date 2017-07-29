@@ -27,8 +27,8 @@ class Execution: Model {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.id = try container.decode(Int.self, forKey: .id)
             self.title = try container.decode(String.self, forKey: .title)
-            self.finishTime = try container.decode(Date.self, forKey: .finishTime)
-            self.note = try container.decode(String.self, forKey: .note)
+            self.finishTime = try container.decodeIfPresent(Date.self, forKey: .finishTime)
+            self.note = try container.decodeIfPresent(String.self, forKey: .note)
             self.icon = ""
         }
     }
@@ -49,7 +49,7 @@ class Execution: Model {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
-        self.currentStepIndex = try container.decode(Int.self, forKey: .currentStepIndex)
+        self.currentStepIndex = try container.decodeIfPresent(Int.self, forKey: .currentStepIndex) ?? 0
         self.state = try container.decode(String.self, forKey: .state)
         self.steps = try container.decode([Step].self, forKey: .steps)
     }

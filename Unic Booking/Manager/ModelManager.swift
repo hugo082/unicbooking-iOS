@@ -39,4 +39,14 @@ class ModelManager<Type:Model> {
     func push(object: Type) {
         self.data[object.id] = object
     }
+    
+    func getData(_ force: Bool = false, completionHandler: @escaping ([Type]?, Error?) -> Void) {
+        if force || self.isLoaded {
+            completionHandler(Array(self.data.values), nil)
+        } else {
+            ApiManager.shared.list(model: Type.self) { objects, error in
+                completionHandler(objects, error)
+            }
+        }
+    }
 }

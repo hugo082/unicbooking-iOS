@@ -12,7 +12,23 @@ class DataManager {
     
     static var shared = DataManager()
     
+    var productManager: ModelManager<Product>
+    var bookManager: ModelManager<Book>
+    
     init(){
-        
+        self.productManager = ModelManager<Product>()
+        self.bookManager = ModelManager<Book>()
     }
+    
+    func manager<Type>(object: Type.Type) -> ModelManager<Type>? {
+        switch object {
+        case is Product.Type:
+            return self.productManager as? ModelManager<Type>
+        case is Book.Type:
+            return self.bookManager as? ModelManager<Type>
+        default:
+            return nil
+        }
+    }
+    
 }

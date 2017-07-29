@@ -10,11 +10,8 @@ import UIKit
 
 class BookListTableViewController: UITableViewController {
     
-    let data = [
-            ("Gordon Burke","2 people • 2 bagages","5.00 PM",""),
-            ("Jeremia Dean","3 people • 2 bagages","6.20 PM",""),
-            ("Carole Arnold","1 people • 3 bagages","3.15 PM","")
-    ]
+    var products: [Product]?
+    var selectedProduct: Product?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +23,9 @@ class BookListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ApiManager.shared.getProducts() { products, error in
-            if products == nil {
-                self.showErrorAlert(title: "Loading error", error: error)
-            } else {
-                self.tableView.reloadData()
-            }
+        DataManager.shared.productManager.getData() { products, error in
+            self.products = products
+            self.tableView.reloadData()
         }
     }
 
@@ -42,26 +36,31 @@ class BookListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return User.shared!.agenda!.count
+        return self.products?.count ?? 0
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "book_cell", for: indexPath) as! BookTableViewCell
-        let book = User.shared!.agenda![indexPath.row]
-        cell.titleLabel.text = "\(book.products.first?.passengers.first?.lastName ?? "empty")"
-        cell.informationLabel.text = "\(book.products.first?.passengers.count ?? 0) people • \(book.products.first?.baggage ?? 0) bagages"
-        cell.timeLabel.text = "6.20 PM"
+        if let product = self.products?[indexPath.row] {
+            debugPrint(product)
+            cell.titleLabel.text = "\(product.passengers.first?.lastName ?? "empty")"
+            cell.informationLabel.text = "\(product.passengers.count) people • \(product.baggage) bagages"
+            cell.timeLabel.text = "6:20 PM"
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "book_details", sender: self)
+        if let product = self.products?[indexPath.row] {
+            self.selectedProduct = product
+            self.performSegue(withIdentifier: "book_details", sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? BookDetailsTableViewController {
-            controller.product = User.shared!.agenda![self.tableView.indexPathForSelectedRow?.row ?? 0].products.first!
+            controller.product = self.selectedProduct
         }
     }
 

@@ -37,8 +37,6 @@ class ModelManager<Type:Model> {
     }
     
     func push(object: Type) {
-        if let id = object.id {
-            self.data[id] = object
-        }
+        self.data[object.id] = object
     }
 }

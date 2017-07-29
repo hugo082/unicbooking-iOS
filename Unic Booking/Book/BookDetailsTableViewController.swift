@@ -16,11 +16,6 @@ class BookDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if User.shared == nil {
-            User.shared?.gen()
-            self.product = User.shared?.productGen("Airport")
-        }
-        
         self.enableTouchesDismiss()
         self.tableView.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetching data...")
@@ -79,7 +74,6 @@ class BookDetailsTableViewController: UITableViewController {
     
     @objc func refreshData(_ sender: UIRefreshControl) {
         print("refresh")
-        self.product = User.shared?.productGen("Airport")
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()

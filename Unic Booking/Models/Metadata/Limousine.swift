@@ -23,4 +23,9 @@ struct LimousineMetadata: Model {
     let car: Car
     let dropOff: String
     let pickUp: String
+    
+    // TODO: Support time
+    var time: Date {
+        return Date()
+    }
 }

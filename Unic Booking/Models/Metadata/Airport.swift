@@ -30,4 +30,8 @@ struct AirportMetadata: Model {
     let flight: Flight
     let flightTransit: Flight?
     let code: String
+    
+    var time: Date {
+        return flight.arrivalTime
+    }
 }

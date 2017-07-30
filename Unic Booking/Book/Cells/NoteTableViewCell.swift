@@ -37,6 +37,5 @@ class NoteTableViewCell: UITableViewCell, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         self.step?.note = textView.text
-        print("Note : \(self.step) - \(textView.text)")
     }
 }

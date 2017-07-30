@@ -31,4 +31,10 @@ class DataManager {
         }
     }
     
+    func logout() {
+        User.shared = nil
+        Credential.destroy()
+        self.productManager.clean()
+        self.bookManager.clean()
+    }
 }

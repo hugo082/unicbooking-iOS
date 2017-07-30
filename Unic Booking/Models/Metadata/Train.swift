@@ -10,8 +10,25 @@ import Foundation
 
 struct TrainMetadata: Decodable {
     
+    enum CodingKeys: String, CodingKey  {
+        case code, station, time
+    }
+    
     let code: String?
     let station: String?
-    let time: String?
+    let time: Date?
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.code = try container.decodeIfPresent(String.self, forKey: .code)
+        self.station = try container.decodeIfPresent(String.self, forKey: .station)
+        if let timeString = try container.decodeIfPresent(String.self, forKey: .time) {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm:ss"
+            self.time = formatter.date(from: timeString)
+        } else {
+            self.time = nil
+        }
+    }
     
 }

@@ -29,6 +29,13 @@ class Credential {
         UserDefaults.standard.synchronize()
     }
     
+    static func destroy(forKey key: String = "auth") {
+        Credential.shared = nil
+        UserDefaults.standard.set(nil, forKey: key + "_token")
+        UserDefaults.standard.set(nil, forKey: key + "_username")
+        UserDefaults.standard.synchronize()
+    }
+    
     static func load(forKey key: String = "auth") -> Credential? {
         if let token = UserDefaults.standard.string(forKey: key + "_token"),
             let username = UserDefaults.standard.string(forKey: key + "_username") {

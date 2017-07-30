@@ -85,12 +85,12 @@
             </objects>
             <point key="canvasLocation" x="-479" y="135"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Task List-->
         <scene sceneID="WFK-vT-AAO">
             <objects>
                 <tableViewController id="8Np-w7-qSS" customClass="BookListTableViewController" customModule="Unic_Booking" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="136" sectionHeaderHeight="28" sectionFooterHeight="28" id="bTY-ef-We9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -115,13 +115,13 @@
                                             <rect key="frame" x="285" y="0.0" width="90" height="85.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5.20 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNf-fK-Nkn">
-                                                    <rect key="frame" x="0.0" y="43" width="90" height="42.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
+                                                    <rect key="frame" x="0.0" y="55.5" width="90" height="30"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c1N-2x-0Eh">
-                                                    <rect key="frame" x="23.5" y="0.0" width="43" height="43"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_baggage" translatesAutoresizingMaskIntoConstraints="NO" id="c1N-2x-0Eh">
+                                                    <rect key="frame" x="17" y="0.0" width="56" height="55.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="c1N-2x-0Eh" secondAttribute="height" multiplier="1:1" id="LTD-lp-Ro3"/>
                                                     </constraints>
@@ -130,10 +130,10 @@
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c1N-2x-0Eh" secondAttribute="trailing" id="2aU-id-Vpc"/>
-                                                <constraint firstItem="c1N-2x-0Eh" firstAttribute="height" secondItem="fak-EU-2yF" secondAttribute="height" multiplier="0.5" id="3yM-e7-qYc"/>
+                                                <constraint firstItem="c1N-2x-0Eh" firstAttribute="height" secondItem="fak-EU-2yF" secondAttribute="height" multiplier="0.65" id="3yM-e7-qYc"/>
                                                 <constraint firstAttribute="trailing" secondItem="sNf-fK-Nkn" secondAttribute="trailing" id="4O0-3u-jYR"/>
                                                 <constraint firstItem="c1N-2x-0Eh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fak-EU-2yF" secondAttribute="leading" id="6fd-2N-Lfu"/>
-                                                <constraint firstItem="sNf-fK-Nkn" firstAttribute="height" secondItem="fak-EU-2yF" secondAttribute="height" multiplier="0.5" id="8gl-Xb-eXe"/>
+                                                <constraint firstItem="sNf-fK-Nkn" firstAttribute="height" secondItem="fak-EU-2yF" secondAttribute="height" multiplier="0.35" id="8gl-Xb-eXe"/>
                                                 <constraint firstItem="c1N-2x-0Eh" firstAttribute="top" secondItem="fak-EU-2yF" secondAttribute="top" id="SPH-5e-LO4"/>
                                                 <constraint firstAttribute="width" constant="90" id="VRn-m3-ZQa"/>
                                                 <constraint firstAttribute="height" constant="85" id="eZr-IL-Ndm"/>
@@ -177,9 +177,23 @@
                             <outlet property="delegate" destination="8Np-w7-qSS" id="4E8-Zm-qw3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="aoR-IB-am0"/>
+                    <navigationItem key="navigationItem" title="Task List" id="aoR-IB-am0">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="gk5-Kg-aUf">
+                            <connections>
+                                <action selector="logoutAction:" destination="8Np-w7-qSS" id="eu6-Fm-5Eo"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icn_filter" id="Alq-Qj-bE7">
+                            <connections>
+                                <action selector="filterAction:" destination="8Np-w7-qSS" id="FtJ-jP-nyD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="filterBBI" destination="Alq-Qj-bE7" id="ARR-4q-TDx"/>
+                        <outlet property="logoutBBI" destination="gk5-Kg-aUf" id="0yv-Yn-Nri"/>
                         <segue destination="z0Y-Ql-bTP" kind="show" identifier="book_details" id="ZsB-eD-49h"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="logout" id="VYy-Td-Gfn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rut-Qc-eJP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -191,7 +205,7 @@
             <objects>
                 <tableViewController id="z0Y-Ql-bTP" customClass="BookDetailsTableViewController" customModule="Unic_Booking" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="7yG-Lh-Abt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="KTc-CW-4wI">
@@ -451,6 +465,8 @@
                             <outlet property="delegate" destination="z0Y-Ql-bTP" id="VPn-YA-xTX"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Boo-CY-FzF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -460,9 +476,14 @@
         <scene sceneID="xwc-ip-Wdq">
             <objects>
                 <navigationController id="h9h-9T-77z" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UDc-KQ-uR9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UDc-KQ-uR9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="8Np-w7-qSS" kind="relationship" relationship="rootViewController" id="5MP-KD-SMY"/>
@@ -475,6 +496,8 @@
     </scenes>
     <resources>
         <image name="back_flight" width="1600" height="850"/>
+        <image name="icn_baggage" width="31" height="25"/>
         <image name="icn_car" width="29" height="26"/>
+        <image name="icn_filter" width="26" height="28"/>
     </resources>
 </document>

@@ -10,10 +10,17 @@ import UIKit
 
 extension Date {
     
-    func string() -> String {
+    func dateString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
         dateFormatter.dateFormat = "MM-dd-yyyy"
+        return dateFormatter.string(from: self)
+    }
+    
+    func timeString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "fr_FR")
+        dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: self)
     }
     

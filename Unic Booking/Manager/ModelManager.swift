@@ -40,13 +40,27 @@ class ModelManager<Type:Model> {
         self.data[object.id] = object
     }
     
-    func getData(_ force: Bool = false, completionHandler: @escaping ([Type]?, Error?) -> Void) {
-        if force || self.isLoaded {
-            completionHandler(Array(self.data.values), nil)
-        } else {
+    func getData(force: Bool = false, completionHandler: @escaping ([Type]?, Error?) -> Void) {
+        if force || !self.isLoaded {
             ApiManager.shared.list(model: Type.self) { objects, error in
                 completionHandler(objects, error)
             }
+        } else {
+            completionHandler(self.getData(), nil)
         }
     }
+    
+    func getData() -> [Type] {
+        return Array(self.data.values)
+    }
+    
+    func filter(handler: (Type) -> Bool) -> [Type] {
+        return self.data.values.filter(handler)
+    }
+    
+    func clean() {
+        self.data.removeAll()
+        self.isLoaded = false
+    }
+    
 }

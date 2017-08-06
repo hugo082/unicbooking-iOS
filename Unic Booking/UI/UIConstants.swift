@@ -22,6 +22,20 @@ class UIConstants {
         
         static let BLUE_CURRENT_BACKGROUND = UIColor(red: 70/255, green: 120/255, blue: 176/255, alpha: 1)
         
+        static let RED_ERROR_BACKGROUND = UIColor(red: 255/255, green: 82/255, blue: 82/255, alpha: 1)
+        
+        static func get(with state: Execution.State) -> UIColor {
+            switch state {
+            case .waiting:
+                return GRAY_WAITING_BACKGROUND
+            case .progress:
+                return BLUE_CURRENT_BACKGROUND
+            case .finished:
+                return GREEN_SUCCESS_BACKGROUND
+            case .empty:
+                return GRAY_WAITING_BACKGROUND
+            }
+        }
     }
     
 }

@@ -37,6 +37,13 @@ class Execution: Model, Updatable {
         }
     }
     
+    enum State: String, Decodable {
+        case waiting = "Waiting"
+        case progress = "In progress"
+        case finished = "Finished"
+        case empty = "Empty"
+    }
+    
     enum CodingKeys: String, CodingKey  {
         case id, state, steps
         case currentStepIndex = "current_step"
@@ -51,7 +58,7 @@ class Execution: Model, Updatable {
         guard let index = currentStepIndex, index >= 0 && index < self.steps.count else { return nil }
         return self.steps[index]
     }
-    var state: String
+    var state: State
     var steps: [Step]
     
     func getStepWithNote() -> [Step] {
@@ -86,7 +93,7 @@ class Execution: Model, Updatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.currentStepIndex = try container.decodeIfPresent(Int.self, forKey: .currentStepIndex)
-        self.state = try container.decode(String.self, forKey: .state)
+        self.state = try container.decode(State.self, forKey: .state)
         self.steps = try container.decode([Step].self, forKey: .steps)
     }
 }

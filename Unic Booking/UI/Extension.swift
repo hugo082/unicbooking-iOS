@@ -10,11 +10,11 @@ import UIKit
 
 extension Date {
     
-    func dateString() -> String {
+    func dateString(_ before: String = "", _ separator: String = " ") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "fr_FR")
-        dateFormatter.dateFormat = "MM-dd-yyyy"
-        return dateFormatter.string(from: self)
+        dateFormatter.dateFormat = "dd\(separator)MMM\(separator)yy"
+        return before + dateFormatter.string(from: self)
     }
     
     func timeString() -> String {

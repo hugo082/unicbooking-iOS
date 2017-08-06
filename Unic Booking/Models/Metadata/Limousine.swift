@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LimousineMetadata: Model {
+struct LimousineMetadata: Model, Metadata {
     
     struct Car: Model {
         let id: Int
@@ -25,7 +25,7 @@ struct LimousineMetadata: Model {
     let pickUp: String
     
     // TODO: Support time
-    var time: Date {
+    var time: Date? {
         return Date()
     }
 }

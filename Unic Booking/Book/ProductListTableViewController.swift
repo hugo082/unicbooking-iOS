@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookListTableViewController: UITableViewController {
+class ProductListTableViewController: UITableViewController {
     
     typealias ServiceType = Product.Base.Service.ServiceType
     
@@ -97,29 +97,24 @@ class BookListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.data?[section].first?.date.dateString()
+        return self.data?[section].first?.date.dateString(" ")
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "book_cell", for: indexPath) as! BookTableViewCell
-        if let product = self.data?[indexPath.section][indexPath.row] {
-            cell.iconImage.image = product.icon
-            cell.titleLabel.text = product.date.dateString()//"\(product.passengers.first?.fullName ?? product.type.name)"
-            cell.informationLabel.text = "\(product.passengers.count) people • \(product.baggage) bagages"
-            cell.timeLabel.text = product.time?.timeString() ?? " - "
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "product_cell", for: indexPath) as! ProductTableViewCell
+        cell.product = self.data?[indexPath.section][indexPath.row]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let product = self.data?[indexPath.section][indexPath.row] {
             self.selectedProduct = product
-            self.performSegue(withIdentifier: "book_details", sender: self)
+            self.performSegue(withIdentifier: "product_details", sender: self)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? BookDetailsTableViewController {
+        if let controller = segue.destination as? ProductDetailsTableViewController {
             controller.product = self.selectedProduct
         }
     }

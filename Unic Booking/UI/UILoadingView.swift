@@ -29,15 +29,22 @@ class UILoadingView {
         })
     }
     
-    func dismissLoader(_ completion: (()->Void)? = nil) {
-        self.contentAC?.dismiss(animated: true, completion: completion)
-    }
-    
     func update(message: String, parentController: UIViewController? = nil) {
         if let controller = self.contentAC  {
             controller.message = message
         } else if let pc = parentController {
             self.presentLoader(pc, message: message)
         }
+    }
+    
+    func handle(error: Error?, message: String? = nil) {
+        if let controller = self.contentAC  {
+            self.update(message: error?.localizedDescription ?? message ?? "Error")
+            controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        }
+    }
+    
+    func dismissLoader(_ completion: (()->Void)? = nil) {
+        self.contentAC?.dismiss(animated: true, completion: completion)
     }
 }

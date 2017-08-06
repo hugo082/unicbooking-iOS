@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TrainMetadata: Decodable {
+struct TrainMetadata: Decodable, Metadata {
     
     enum CodingKeys: String, CodingKey  {
         case code, station, time

@@ -17,11 +17,11 @@ class UTFlightView: UIView {
     
     var flight: Flight? {
         didSet {
-            self.computeFlightInformation()
+            self.updateUI()
         }
     }
     
-    func computeFlightInformation() {
+    func updateUI() {
         if let flight = self.flight {
             self.isHidden = false
             self.numberLabel.text = "AF432_"//flight.code

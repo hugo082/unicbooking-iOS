@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AirportMetadata: Model {
+struct AirportMetadata: Model, Metadata {
     
     struct Flight: Model {
         
@@ -31,7 +31,7 @@ struct AirportMetadata: Model {
     let flightTransit: Flight?
     let code: String
     
-    var time: Date {
+    var time: Date? {
         return flight.arrivalTime
     }
 }

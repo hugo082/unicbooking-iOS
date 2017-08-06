@@ -13,6 +13,10 @@
 		8B0540171F211DAF001ABE45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0540161F211DAF001ABE45 /* User.swift */; };
 		8B0540191F211EEC001ABE45 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0540181F211EEC001ABE45 /* AuthenticationViewController.swift */; };
 		8B1B1FE21F2E1F2E00DD7A2C /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1B1FE11F2E1F2E00DD7A2C /* Updatable.swift */; };
+		8B4D66061F3762B2003E0087 /* LimousineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */; };
+		8B4D66081F3762BA003E0087 /* TrainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */; };
+		8B4D660A1F3762EF003E0087 /* RecapCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66091F3762EF003E0087 /* RecapCellProtocol.swift */; };
+		8B4D660C1F3763B4003E0087 /* MetadataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D660B1F3763B4003E0087 /* MetadataProtocol.swift */; };
 		8B5C85641F2CCA4C00E1D56C /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C85631F2CCA4C00E1D56C /* ApiManager.swift */; };
 		8B5C85661F2CCA5400E1D56C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C85651F2CCA5400E1D56C /* DataManager.swift */; };
 		8B5C85691F2CCBEA00E1D56C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C85681F2CCBEA00E1D56C /* Environment.swift */; };
@@ -38,9 +42,9 @@
 		8B81FF071F1FECDE00D47451 /* Unic_BookingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF061F1FECDE00D47451 /* Unic_BookingTests.swift */; };
 		8B81FF121F1FECDE00D47451 /* Unic_BookingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF111F1FECDE00D47451 /* Unic_BookingUITests.swift */; };
 		8B81FF201F1FEF3700D47451 /* UTTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF1F1F1FEF3700D47451 /* UTTextField.swift */; };
-		8B81FF231F1FF0FF00D47451 /* BookListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF221F1FF0FF00D47451 /* BookListTableViewController.swift */; };
-		8B81FF251F1FF10B00D47451 /* BookDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF241F1FF10B00D47451 /* BookDetailsTableViewController.swift */; };
-		8B81FF281F1FF3C900D47451 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF271F1FF3C900D47451 /* BookTableViewCell.swift */; };
+		8B81FF231F1FF0FF00D47451 /* ProductListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF221F1FF0FF00D47451 /* ProductListTableViewController.swift */; };
+		8B81FF251F1FF10B00D47451 /* ProductDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF241F1FF10B00D47451 /* ProductDetailsTableViewController.swift */; };
+		8B81FF281F1FF3C900D47451 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81FF271F1FF3C900D47451 /* ProductTableViewCell.swift */; };
 		964EED8C2E354F8CDA64B3B2 /* Pods_Unic_BookingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F8D5240024780FA9266334 /* Pods_Unic_BookingTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +74,10 @@
 		8B0540161F211DAF001ABE45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8B0540181F211EEC001ABE45 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		8B1B1FE11F2E1F2E00DD7A2C /* Updatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
+		8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimousineTableViewCell.swift; sourceTree = "<group>"; };
+		8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainTableViewCell.swift; sourceTree = "<group>"; };
+		8B4D66091F3762EF003E0087 /* RecapCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapCellProtocol.swift; sourceTree = "<group>"; };
+		8B4D660B1F3763B4003E0087 /* MetadataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataProtocol.swift; sourceTree = "<group>"; };
 		8B5C85631F2CCA4C00E1D56C /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		8B5C85651F2CCA5400E1D56C /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		8B5C85681F2CCBEA00E1D56C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -101,9 +109,9 @@
 		8B81FF111F1FECDE00D47451 /* Unic_BookingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unic_BookingUITests.swift; sourceTree = "<group>"; };
 		8B81FF131F1FECDE00D47451 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B81FF1F1F1FEF3700D47451 /* UTTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTTextField.swift; sourceTree = "<group>"; };
-		8B81FF221F1FF0FF00D47451 /* BookListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListTableViewController.swift; sourceTree = "<group>"; };
-		8B81FF241F1FF10B00D47451 /* BookDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsTableViewController.swift; sourceTree = "<group>"; };
-		8B81FF271F1FF3C900D47451 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
+		8B81FF221F1FF0FF00D47451 /* ProductListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListTableViewController.swift; sourceTree = "<group>"; };
+		8B81FF241F1FF10B00D47451 /* ProductDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewController.swift; sourceTree = "<group>"; };
+		8B81FF271F1FF3C900D47451 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		B00C8065FEB0F03213043E77 /* Pods-Unic BookingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unic BookingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unic BookingTests/Pods-Unic BookingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C92D9E6AB5DE2D64206F98F8 /* Pods-Unic Booking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unic Booking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unic Booking/Pods-Unic Booking.debug.xcconfig"; sourceTree = "<group>"; };
 		DD71C2CDA724EFDE9E6162E4 /* Pods-Unic Booking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unic Booking.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unic Booking/Pods-Unic Booking.release.xcconfig"; sourceTree = "<group>"; };
@@ -175,6 +183,17 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		8B4D66041F376296003E0087 /* Recap Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8B4D66091F3762EF003E0087 /* RecapCellProtocol.swift */,
+				8B77147C1F2130AE007FF67E /* FlightTableViewCell.swift */,
+				8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */,
+				8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */,
+			);
+			path = "Recap Cells";
+			sourceTree = "<group>";
+		};
 		8B5C85671F2CCA5900E1D56C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +216,7 @@
 		8B6A09EA1F250CDE00C9F242 /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				8B4D660B1F3763B4003E0087 /* MetadataProtocol.swift */,
 				8B6A09E21F250C1B00C9F242 /* Airport.swift */,
 				8B6A09E61F250C3400C9F242 /* Limousine.swift */,
 				8B6A09E81F250CD900C9F242 /* Train.swift */,
@@ -277,8 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				8B81FF291F1FF3D000D47451 /* Cells */,
-				8B81FF221F1FF0FF00D47451 /* BookListTableViewController.swift */,
-				8B81FF241F1FF10B00D47451 /* BookDetailsTableViewController.swift */,
+				8B81FF221F1FF0FF00D47451 /* ProductListTableViewController.swift */,
+				8B81FF241F1FF10B00D47451 /* ProductDetailsTableViewController.swift */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -286,9 +306,9 @@
 		8B81FF291F1FF3D000D47451 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8B81FF271F1FF3C900D47451 /* BookTableViewCell.swift */,
+				8B4D66041F376296003E0087 /* Recap Cells */,
+				8B81FF271F1FF3C900D47451 /* ProductTableViewCell.swift */,
 				8B77147A1F21309A007FF67E /* ExecutionStepTableViewCell.swift */,
-				8B77147C1F2130AE007FF67E /* FlightTableViewCell.swift */,
 				8B6A09DC1F2503E600C9F242 /* NoteTableViewCell.swift */,
 			);
 			path = Cells;
@@ -592,23 +612,27 @@
 				8B6A09E71F250C3400C9F242 /* Limousine.swift in Sources */,
 				8B5C856F1F2CE64200E1D56C /* ModelManager.swift in Sources */,
 				8B77147B1F21309A007FF67E /* ExecutionStepTableViewCell.swift in Sources */,
-				8B81FF251F1FF10B00D47451 /* BookDetailsTableViewController.swift in Sources */,
+				8B81FF251F1FF10B00D47451 /* ProductDetailsTableViewController.swift in Sources */,
 				8B5C85691F2CCBEA00E1D56C /* Environment.swift in Sources */,
 				8B0540171F211DAF001ABE45 /* User.swift in Sources */,
+				8B4D66081F3762BA003E0087 /* TrainTableViewCell.swift in Sources */,
 				8B6A09EC1F250DD500C9F242 /* Execution.swift in Sources */,
 				8B6A09DD1F2503E600C9F242 /* NoteTableViewCell.swift in Sources */,
 				8B5C85661F2CCA5400E1D56C /* DataManager.swift in Sources */,
 				8B0540191F211EEC001ABE45 /* AuthenticationViewController.swift in Sources */,
-				8B81FF231F1FF0FF00D47451 /* BookListTableViewController.swift in Sources */,
+				8B81FF231F1FF0FF00D47451 /* ProductListTableViewController.swift in Sources */,
 				8B5C85641F2CCA4C00E1D56C /* ApiManager.swift in Sources */,
 				8B6A09D91F24F9AC00C9F242 /* UTFlightView.swift in Sources */,
 				8B5C85711F2CE65D00E1D56C /* Model.swift in Sources */,
-				8B81FF281F1FF3C900D47451 /* BookTableViewCell.swift in Sources */,
+				8B81FF281F1FF3C900D47451 /* ProductTableViewCell.swift in Sources */,
 				8B6A09DB1F24FB3400C9F242 /* Extension.swift in Sources */,
+				8B4D66061F3762B2003E0087 /* LimousineTableViewCell.swift in Sources */,
 				8B6A09D71F24F0B200C9F242 /* UIConstants.swift in Sources */,
 				8B6A09E31F250C1B00C9F242 /* Airport.swift in Sources */,
+				8B4D660A1F3762EF003E0087 /* RecapCellProtocol.swift in Sources */,
 				8B81FF201F1FEF3700D47451 /* UTTextField.swift in Sources */,
 				8B77147D1F2130AE007FF67E /* FlightTableViewCell.swift in Sources */,
+				8B4D660C1F3763B4003E0087 /* MetadataProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

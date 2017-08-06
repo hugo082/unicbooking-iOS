@@ -19,6 +19,11 @@ class AuthenticationViewController: UIViewController {
         return Credential(username: username, password: password, token: nil)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.enableTouchesDismiss()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if Credential.load() != nil {
@@ -34,9 +39,7 @@ class AuthenticationViewController: UIViewController {
         UILoadingView.shared.presentLoader(self, message: "Check credentials...")
         ApiManager.shared.login(credential: credential) { token, error in
             if token == nil {
-                UILoadingView.shared.dismissLoader() {
-                    self.showAlert(title: "Invalid credentials", message: nil)
-                }
+                UILoadingView.shared.handle(error: error, message: "Invalid credentials")
             } else {
                 credential.token = token
                 credential.save()
@@ -48,13 +51,10 @@ class AuthenticationViewController: UIViewController {
     func createUser() {
         UILoadingView.shared.update(message: "Fetching user data...", parentController: self)
         ApiManager.shared.getUserDetails() { user, error in
-            UILoadingView.shared.dismissLoader() {
-                if let error = error {
-                    self.showErrorAlert(title: "Login error", error: error)
-                    return
-                } else if user == nil {
-                    self.showAlert(title: "Unknow error", message: "Code: auth_384")
-                } else {
+            if user == nil {
+                UILoadingView.shared.handle(error: error, message: "Unknow error (auth_384)")
+            } else {
+                UILoadingView.shared.dismissLoader() {
                     User.shared = user
                     self.performSegue(withIdentifier: "main_list", sender: self)
                 }

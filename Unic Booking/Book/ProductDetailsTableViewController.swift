@@ -8,7 +8,30 @@
 
 import UIKit
 
-class BookDetailsTableViewController: UITableViewController {
+import CoreLocation
+import MapKit
+
+class ProductDetailsTableViewController: UITableViewController {
+    
+    enum Cell: String {
+        case recapAirport = "book_flight_cell", recapTrain = "book_train_cell", recapLimousine = "book_limousine_cell"
+        case step = "book_execution_step_cell"
+        case note = "book_note_cell"
+        
+        static func recap(with serviceType: Product.Base.Service.ServiceType) -> Cell {
+            switch serviceType {
+            case .airport:
+                return Cell.recapAirport
+            case .train:
+                return Cell.recapTrain
+            case .limousine:
+                return Cell.recapLimousine
+            }
+        }
+    }
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var statusLabel: UILabel!
     
     var product: Product!
     var stepNotes: [Execution.Step] = []
@@ -16,6 +39,10 @@ class BookDetailsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.titleLabel.text = product.passengers.first?.fullName ?? product.type.name
+        self.statusLabel.text = product.execution.state.rawValue
+        self.statusLabel.backgroundColor = UIConstants.Color.get(with: product.execution.state)
         
         self.enableTouchesDismiss()
         self.tableView.refreshControl = UIRefreshControl()
@@ -41,27 +68,26 @@ class BookDetailsTableViewController: UITableViewController {
             return 1
         }
         self.stepNotes = self.product.execution.getStepWithNote()
-        return self.stepNotes.count + 1
+        let c = self.stepNotes.count
+        return c + (c > 0 ? 1 : 0)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "book_execution_step_cell", for: indexPath) as! ExecutionStepTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
             cell.step = self.product.execution.steps[indexPath.row]
             cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1)
             return cell
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "book_flight_cell", for: indexPath) as! FlightTableViewCell
-            if let airportMetadata = self.product.airport {
-                cell.flightView.flight = airportMetadata.flight
-                cell.flightTransitView.flight = airportMetadata.flightTransit
-                cell.serviceTypeLabel.text = self.product.type.service.name
-            }
-            return cell
+            let identifier = Cell.recap(with: self.product.type.service.type)
+            var cell = tableView.dequeueReusableCell(withIdentifier: identifier.rawValue, for: indexPath) as! RecapCell
+            cell.product = product
+            (cell as? LimousineTableViewCell)?.controller = self
+            return cell as! UITableViewCell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "book_note_cell", for: indexPath) as! NoteTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cell.note.rawValue, for: indexPath) as! NoteTableViewCell
         if indexPath.row < self.stepNotes.count {
             cell.step = self.stepNotes[indexPath.row]
         } else {
@@ -76,7 +102,6 @@ class BookDetailsTableViewController: UITableViewController {
         if let cell = tableView.cellForRow(at: indexPath) as? ExecutionStepTableViewCell {
             if (self.product.execution.complete(step: cell.step!)) {
                 ApiManager.shared.update(self.product.execution) { error in
-                    print("Updated", self.product.execution)
                     if let error = error {
                         self.showErrorAlert(title: "Update Error", error: error)
                         return
@@ -92,7 +117,6 @@ class BookDetailsTableViewController: UITableViewController {
     // MARK: - Actions
     
     @objc func startAction(_ sender: UIBarButtonItem) {
-        self.product.execution.currentStepIndex = 0
         ApiManager.shared.update(self.product.execution) { error in
             if let error = error {
                 self.showErrorAlert(title: "Update Error", error: error)

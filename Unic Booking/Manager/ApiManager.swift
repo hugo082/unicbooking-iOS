@@ -98,6 +98,7 @@ class ApiManager {
             if let data = data {
                 do {
                     let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.secondsSince1970
                     let objects = try decoder.decode([Type].self, from: data)
                     let manager = DataManager.shared.manager(object: model)
                     manager?.push(objects: objects)
@@ -143,6 +144,7 @@ class ApiManager {
             if let data = data {
                 do {
                     let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.secondsSince1970
                     let object = try decoder.decode(Type.self, from: data)
                     completionHandler(object, nil)
                 } catch let error {

@@ -24,8 +24,8 @@ class UTFlightView: UIView {
     func updateUI() {
         if let flight = self.flight {
             self.isHidden = false
-            self.numberLabel.text = "AF432_"//flight.code
-            self.timeLabel.text = flight.arrivalTime.dateString()
+            self.numberLabel.text = flight.codes.master
+            self.timeLabel.text = flight.arrivalTime.timeString()
         } else {
             self.isHidden = true
         }

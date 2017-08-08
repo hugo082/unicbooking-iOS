@@ -29,9 +29,8 @@ enum Environment: String {
         case .Localhost:
             return "http://localhost:8000/api"
         case .Staging:
-            return "http://safe-fortress-60581.herokuapp.com/api"
+            return "http://vast-plateau-22948.herokuapp.com/api"
         case .Production:
-            print("WARNING : Staging ENV")
             return "http://safe-fortress-60581.herokuapp.com/api"
         }
     }

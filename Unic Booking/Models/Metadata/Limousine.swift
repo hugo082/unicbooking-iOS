@@ -16,16 +16,24 @@ struct LimousineMetadata: Model, Metadata {
     }
     
     enum CodingKeys: String, CodingKey  {
-        case id, car, dropOff = "drop_off", pickUp = "pick_up"
+        case id, car, dropOff = "drop_off", pickUp = "pick_up", time
     }
     
     let id: Int
     let car: Car
     let dropOff: String
     let pickUp: String
+    let time: Date?
     
-    // TODO: Support time
-    var time: Date? {
-        return Date()
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.car = try container.decode(Car.self, forKey: .car)
+        self.dropOff = try container.decode(String.self, forKey: .dropOff)
+        self.pickUp = try container.decode(String.self, forKey: .pickUp)
+        let timeString = try container.decode(String.self, forKey: .time)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        self.time = formatter.date(from: timeString)
     }
 }

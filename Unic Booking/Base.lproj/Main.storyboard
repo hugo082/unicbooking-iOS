@@ -29,7 +29,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PT0-2P-Wz5">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_flight_sunset" translatesAutoresizingMaskIntoConstraints="NO" id="PT0-2P-Wz5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="333.5"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RRD-FX-MZ7" customClass="UTTextField" customModule="Unic_Booking" customModuleProvider="target">
@@ -42,7 +42,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fTt-N1-WMD" customClass="UTTextField" customModule="Unic_Booking" customModuleProvider="target">
-                                <rect key="frame" x="16" y="434.5" width="343" height="46"/>
+                                <rect key="frame" x="16" y="417.5" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="aWu-yj-k2q"/>
                                 </constraints>
@@ -51,7 +51,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" smartDashesType="no" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viC-fi-c8c">
-                                <rect key="frame" x="16" y="515.5" width="343" height="46"/>
+                                <rect key="frame" x="16" y="523.5" width="343" height="46"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cmE-fs-xaN"/>
@@ -66,7 +66,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fTt-N1-WMD" firstAttribute="top" secondItem="RRD-FX-MZ7" secondAttribute="bottom" constant="25" id="0eE-tc-JJZ"/>
+                            <constraint firstItem="fTt-N1-WMD" firstAttribute="top" secondItem="RRD-FX-MZ7" secondAttribute="bottom" constant="8" id="0eE-tc-JJZ"/>
                             <constraint firstItem="PT0-2P-Wz5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="44B-ZY-nrR"/>
                             <constraint firstAttribute="trailing" secondItem="PT0-2P-Wz5" secondAttribute="trailing" id="6OW-9G-Peo"/>
                             <constraint firstItem="viC-fi-c8c" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="C3g-IX-hne"/>
@@ -76,7 +76,7 @@
                             <constraint firstAttribute="trailing" secondItem="viC-fi-c8c" secondAttribute="trailing" constant="16" id="bbL-sX-FQq"/>
                             <constraint firstItem="RRD-FX-MZ7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="fQT-Mr-Aw4"/>
                             <constraint firstItem="fTt-N1-WMD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="pOG-lD-4rM"/>
-                            <constraint firstItem="viC-fi-c8c" firstAttribute="top" secondItem="fTt-N1-WMD" secondAttribute="bottom" constant="35" id="sLs-Vp-ETn"/>
+                            <constraint firstItem="viC-fi-c8c" firstAttribute="top" secondItem="fTt-N1-WMD" secondAttribute="bottom" constant="60" id="sLs-Vp-ETn"/>
                             <constraint firstItem="RRD-FX-MZ7" firstAttribute="top" secondItem="PT0-2P-Wz5" secondAttribute="bottom" constant="30" id="sQg-mV-oeh"/>
                             <constraint firstItem="PT0-2P-Wz5" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="veW-wX-phU"/>
                         </constraints>
@@ -184,7 +184,7 @@
                                 <connections>
                                     <outlet property="iconImage" destination="c1N-2x-0Eh" id="0D2-eH-Vrs"/>
                                     <outlet property="informationLabel" destination="tF2-Dy-s1p" id="k1c-3q-P6u"/>
-                                    <outlet property="stateView" destination="czI-hG-qXo" id="h3z-CE-iBJ"/>
+                                    <outlet property="stateView" destination="czI-hG-qXo" id="1de-Af-oea"/>
                                     <outlet property="timeLabel" destination="sNf-fK-Nkn" id="wKi-5a-Uup"/>
                                     <outlet property="titleLabel" destination="tM6-1w-CRP" id="442-5l-ubk"/>
                                 </connections>
@@ -277,7 +277,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="book_execution_step_cell" rowHeight="75" id="Xgw-A7-D80" customClass="ExecutionStepTableViewCell" customModule="Unic_Booking" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="book_execution_step_cell" focusStyle="custom" rowHeight="75" id="Xgw-A7-D80" customClass="ExecutionStepTableViewCell" customModule="Unic_Booking" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="189" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xgw-A7-D80" id="uRg-6k-jic">
@@ -463,11 +463,8 @@
                                                 <constraint firstAttribute="height" constant="73" id="HQp-Ze-Fhc"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5P-yX-lp4">
-                                            <rect key="frame" x="8" y="89" width="73" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="SZB-DA-HIG"/>
-                                            </constraints>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departure" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5P-yX-lp4">
+                                            <rect key="frame" x="8" y="89" width="73" height="49"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -574,6 +571,7 @@
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="q5P-yX-lp4" secondAttribute="trailing" constant="20" symbolic="YES" id="0fw-yQ-Bch"/>
                                         <constraint firstItem="qOP-zl-ECM" firstAttribute="leading" secondItem="8F7-lU-q6k" secondAttribute="leading" id="24u-pk-2TJ"/>
                                         <constraint firstItem="q5P-yX-lp4" firstAttribute="width" secondItem="mTz-2o-ZMP" secondAttribute="width" id="6E7-EU-cCa"/>
+                                        <constraint firstItem="q5P-yX-lp4" firstAttribute="bottom" secondItem="qOP-zl-ECM" secondAttribute="bottom" id="7Tc-9G-rBi"/>
                                         <constraint firstItem="8F7-lU-q6k" firstAttribute="top" secondItem="zWZ-E5-xmp" secondAttribute="bottom" constant="8" id="Ell-EV-GKt"/>
                                         <constraint firstAttribute="trailing" secondItem="JMI-R3-XRZ" secondAttribute="trailing" constant="13.5" id="FV2-Pj-spi"/>
                                         <constraint firstItem="zWZ-E5-xmp" firstAttribute="leading" secondItem="mTz-2o-ZMP" secondAttribute="trailing" constant="20" id="Ft6-NT-JU0"/>
@@ -791,6 +789,7 @@
     </scenes>
     <resources>
         <image name="back_flight" width="1600" height="850"/>
+        <image name="back_flight_sunset" width="2511" height="1671"/>
         <image name="icn_baggage" width="31" height="25"/>
         <image name="icn_car" width="29" height="26"/>
         <image name="icn_filter" width="26" height="28"/>

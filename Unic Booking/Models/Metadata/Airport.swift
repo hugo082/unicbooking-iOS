@@ -10,26 +10,45 @@ import Foundation
 
 struct AirportMetadata: Model, Metadata {
     
+    struct Codes: Decodable {
+        
+        let master: String
+        let icao: String
+        let iata: String
+        
+    }
+    
+    struct Airport: Model {
+        
+        let id: Int
+        let name: String
+        let codes: Codes
+        
+    }
+    
     struct Flight: Model {
         
         enum CodingKeys: String, CodingKey  {
-            case id, arrivalTime = "arrival_time", departureTime = "departure_time"
+            case id, codes
+            case arrivalTime = "arrival_time", departureTime = "departure_time"
+            case origin, destination
         }
         
         let id: Int
-//        let code: String
+        let codes: Codes
+        let origin: Airport
+        let destination: Airport
         let arrivalTime: Date
         let departureTime: Date
     }
     
     enum CodingKeys: String, CodingKey  {
-        case id, flight, flightTransit = "flight_transit", code
+        case id, flight, flightTransit = "flight_transit"
     }
     
     let id: Int
     let flight: Flight
     let flightTransit: Flight?
-    let code: String
     
     var time: Date? {
         return flight.arrivalTime

@@ -95,6 +95,7 @@ class ApiManager {
     func list<Type: Model>(model: Type.Type, completionHandler: @escaping ([Type]?, Error?) -> Void) {
         guard let url = self.getUrl(model) else { return }
         self.coreRequest(url: url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers) { data, error in
+            debugPrint(data, error)
             if let data = data {
                 do {
                     let decoder = JSONDecoder()

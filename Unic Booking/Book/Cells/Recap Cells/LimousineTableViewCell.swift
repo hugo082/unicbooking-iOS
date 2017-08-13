@@ -36,7 +36,7 @@ class LimousineTableViewCell: UITableViewCell, RecapCell {
         self.serviceTypeLabel.text = self.product?.type.name
         self.pickUpAddressLabel.text = self.limousineMetadata?.pickUp
         self.dropOffAddressLabel.text = self.limousineMetadata?.dropOff
-        self.carLabel.text = self.limousineMetadata?.car.name
+        //self.carLabel.text = self.limousineMetadata?.
     }
 
     @IBAction func openMap(_ sender: UIButton) {

@@ -64,9 +64,9 @@ class ProductDetailsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.product.execution.steps.count
-        } else if section == 1 {
             return 1
+        } else if section == 1 {
+            return self.product.execution.steps.count
         }
         self.stepNotes = self.product.execution.getStepWithNote()
         return self.stepNotes.count + (self.product.execution.state == .progress ? 1 : 0)
@@ -75,14 +75,14 @@ class ProductDetailsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
-            cell.step = self.product.execution.steps[indexPath.row]
-            cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1)
-            return cell
-        } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.recap.rawValue, for: indexPath) as! RecapTableViewCell
             cell.product = product
             cell.controller = self
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
+            cell.step = self.product.execution.steps[indexPath.row]
+            cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1)
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.note.rawValue, for: indexPath) as! NoteTableViewCell

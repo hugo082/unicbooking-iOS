@@ -66,7 +66,7 @@ class Execution: Model, Updatable, CustomStringConvertible {
     
     func getStepWithNote() -> [Step] {
         return self.steps.filter() { step in
-            return step.note != nil && step.note != ""
+            return step.note != nil && step.note != "" && step.id != (self.currentStep?.id ?? -1)
         }
     }
     

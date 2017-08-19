@@ -31,7 +31,6 @@ class ProductDetailsTableViewController: UITableViewController {
         }
     }
     
-    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
     
     var product: Product!
@@ -41,7 +40,6 @@ class ProductDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.titleLabel.text = product.passengers.first?.fullName ?? product.type.name
         self.statusLabel.text = product.execution.state.rawValue
         self.statusLabel.backgroundColor = UIConstants.Color.get(with: product.execution.state)
         
@@ -82,7 +80,7 @@ class ProductDetailsTableViewController: UITableViewController {
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
             cell.step = self.product.execution.steps[indexPath.row]
-            cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1)
+            cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1, baggages: self.product.baggage)
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.note.rawValue, for: indexPath) as! NoteTableViewCell

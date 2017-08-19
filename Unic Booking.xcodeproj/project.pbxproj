@@ -13,6 +13,7 @@
 		8B0540171F211DAF001ABE45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0540161F211DAF001ABE45 /* User.swift */; };
 		8B0540191F211EEC001ABE45 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0540181F211EEC001ABE45 /* AuthenticationViewController.swift */; };
 		8B1B1FE21F2E1F2E00DD7A2C /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1B1FE11F2E1F2E00DD7A2C /* Updatable.swift */; };
+		8B4277891F48404600D4A1B2 /* RecapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4277881F48404600D4A1B2 /* RecapTableViewCell.swift */; };
 		8B4D66061F3762B2003E0087 /* LimousineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */; };
 		8B4D66081F3762BA003E0087 /* TrainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */; };
 		8B4D660A1F3762EF003E0087 /* RecapCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D66091F3762EF003E0087 /* RecapCellProtocol.swift */; };
@@ -74,6 +75,7 @@
 		8B0540161F211DAF001ABE45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8B0540181F211EEC001ABE45 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		8B1B1FE11F2E1F2E00DD7A2C /* Updatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
+		8B4277881F48404600D4A1B2 /* RecapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapTableViewCell.swift; sourceTree = "<group>"; };
 		8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimousineTableViewCell.swift; sourceTree = "<group>"; };
 		8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainTableViewCell.swift; sourceTree = "<group>"; };
 		8B4D66091F3762EF003E0087 /* RecapCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapCellProtocol.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				8B77147C1F2130AE007FF67E /* FlightTableViewCell.swift */,
 				8B4D66051F3762B2003E0087 /* LimousineTableViewCell.swift */,
 				8B4D66071F3762BA003E0087 /* TrainTableViewCell.swift */,
+				8B4277881F48404600D4A1B2 /* RecapTableViewCell.swift */,
 			);
 			path = "Recap Cells";
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B0540151F2119BF001ABE45 /* Book.swift in Sources */,
+				8B4277891F48404600D4A1B2 /* RecapTableViewCell.swift in Sources */,
 				8B81FEF21F1FECDE00D47451 /* AppDelegate.swift in Sources */,
 				8B6A09E91F250CD900C9F242 /* Train.swift in Sources */,
 				8B1B1FE21F2E1F2E00DD7A2C /* Updatable.swift in Sources */,

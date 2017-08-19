@@ -6,7 +6,7 @@
 //  Copyright © 2017 Hugo Fouquet. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct AirportMetadata: Model, Metadata {
     
@@ -28,8 +28,12 @@ struct AirportMetadata: Model, Metadata {
     
     struct Flight: Model {
         
+        enum FlightType: String, Decodable {
+            case arrival = "ARR", departure = "DEP"
+        }
+        
         enum CodingKeys: String, CodingKey  {
-            case id, codes
+            case id, codes, type
             case arrivalTime = "arrival_time", departureTime = "departure_time"
             case origin, destination
         }
@@ -38,8 +42,22 @@ struct AirportMetadata: Model, Metadata {
         let codes: Codes
         let origin: Airport
         let destination: Airport
+        let type: FlightType
         let arrivalTime: Date
         let departureTime: Date
+        
+        var time: Date {
+            return self.type == .arrival ? arrivalTime : departureTime
+        }
+        
+        var icon: UIImage {
+            return self.type == .arrival ? #imageLiteral(resourceName: "icn_flight_arrival") : #imageLiteral(resourceName: "icn_flight_departure")
+        }
+        
+        /// Airport where service take place
+        var airport: Airport {
+            return self.type == .arrival ? origin : destination
+        }
     }
     
     enum CodingKeys: String, CodingKey  {
@@ -51,6 +69,11 @@ struct AirportMetadata: Model, Metadata {
     let flightTransit: Flight?
     
     var time: Date? {
-        return flight.arrivalTime
+        return flight.time
+    }
+    
+    /// Airport where service take place
+    var mainAirport: Airport {
+        return self.flight.airport
     }
 }

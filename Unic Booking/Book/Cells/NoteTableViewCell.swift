@@ -36,6 +36,8 @@ class NoteTableViewCell: UITableViewCell, UITextViewDelegate {
     // Mark: - Text View Delegate
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.step?.note = textView.text
+        if (textView.text != "") {
+            self.step?.note = textView.text
+        }
     }
 }

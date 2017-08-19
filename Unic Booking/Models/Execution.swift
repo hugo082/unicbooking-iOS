@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Execution: Model, Updatable {
+class Execution: Model, Updatable, CustomStringConvertible {
     
     class Step: Model {
         
@@ -25,6 +25,9 @@ class Execution: Model, Updatable {
         
         var icon: UIImage? {
             return UIImage(named: self.iconName)
+        }
+        var castedNote: String? {
+            return self.note != "" ? self.note : nil
         }
         
         required init(from decoder: Decoder) throws {
@@ -63,7 +66,7 @@ class Execution: Model, Updatable {
     
     func getStepWithNote() -> [Step] {
         return self.steps.filter() { step in
-            return step.note != nil
+            return step.note != nil && step.note != ""
         }
     }
     
@@ -95,5 +98,11 @@ class Execution: Model, Updatable {
         self.currentStepIndex = try container.decodeIfPresent(Int.self, forKey: .currentStepIndex)
         self.state = try container.decode(State.self, forKey: .state)
         self.steps = try container.decode([Step].self, forKey: .steps)
+    }
+    
+    // MARK: - Default
+    
+    var description: String {
+        return "Execution(Step:\(self.forceCurrentStepIndex) - counts:\(self.steps.count) - state:\(self.state)"
     }
 }

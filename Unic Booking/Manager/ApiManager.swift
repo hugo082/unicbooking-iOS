@@ -81,7 +81,10 @@ class ApiManager {
     
     func update(_ execution: Execution, completionHandler: @escaping (Error?) -> Void) {
         guard let url = self.getUrl(execution) else { return }
-        let parameters: Parameters = ["current_step" : (execution.forceCurrentStepIndex + 1), "note" : execution.currentStep?.note ?? ""]
+        var parameters: Parameters = ["current_step" : (execution.forceCurrentStepIndex + 1), "note" : execution.currentStep?.note ?? ""]
+        if let note = execution.currentStep?.note {
+            parameters["note"] = note
+        }
         self.coreRequest(type: Execution.self, url: url, method: .put, parameters: parameters, encoding: URLEncoding.default, headers: self.headers) { object, error in
             if let object = object {
                 execution.update(from: object)
@@ -95,7 +98,6 @@ class ApiManager {
     func list<Type: Model>(model: Type.Type, completionHandler: @escaping ([Type]?, Error?) -> Void) {
         guard let url = self.getUrl(model) else { return }
         self.coreRequest(url: url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers) { data, error in
-            debugPrint(data, error)
             if let data = data {
                 do {
                     let decoder = JSONDecoder()

@@ -28,7 +28,7 @@ class FlightTableViewCell: UITableViewCell, RecapCell {
     }
     
     func updateUI() {
-        self.iconView.image = #imageLiteral(resourceName: "icn_flight_arrival")
+        self.iconView.image = self.airportMetadata?.flight.icon
         self.serviceTypeLabel.text = self.product?.type.name
         self.flightView.flight = self.airportMetadata?.flight
         self.flightTransitView.flight = self.airportMetadata?.flightTransit

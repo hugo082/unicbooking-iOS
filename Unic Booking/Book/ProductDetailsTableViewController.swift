@@ -15,10 +15,11 @@ class ProductDetailsTableViewController: UITableViewController {
     
     enum Cell: String {
         case recapAirport = "book_flight_cell", recapTrain = "book_train_cell", recapLimousine = "book_limousine_cell"
+        case recap = "product_recap_cell"
         case step = "book_execution_step_cell"
         case note = "book_note_cell"
         
-        static func recap(with serviceType: Product.Base.Service.ServiceType) -> Cell {
+        static func get(from serviceType: Product.Base.Service.ServiceType) -> Cell {
             switch serviceType {
             case .airport:
                 return Cell.recapAirport
@@ -68,28 +69,26 @@ class ProductDetailsTableViewController: UITableViewController {
             return 1
         }
         self.stepNotes = self.product.execution.getStepWithNote()
-        let c = self.stepNotes.count
-        return c + (c > 0 ? 1 : 0)
+        return self.stepNotes.count + (self.product.execution.state == .progress ? 1 : 0)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
             cell.step = self.product.execution.steps[indexPath.row]
             cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1)
             return cell
         } else if indexPath.section == 1 {
-            let identifier = Cell.recap(with: self.product.type.service.type)
-            var cell = tableView.dequeueReusableCell(withIdentifier: identifier.rawValue, for: indexPath) as! RecapCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.recap.rawValue, for: indexPath) as! RecapTableViewCell
             cell.product = product
-            (cell as? LimousineTableViewCell)?.controller = self
-            return cell as! UITableViewCell
+            cell.controller = self
+            return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.note.rawValue, for: indexPath) as! NoteTableViewCell
         if indexPath.row < self.stepNotes.count {
             cell.step = self.stepNotes[indexPath.row]
+            cell.noteView.isEditable = false
         } else {
             cell.step = self.product.execution.currentStep
             cell.noteView.isEditable = true
@@ -105,10 +104,8 @@ class ProductDetailsTableViewController: UITableViewController {
                     if let error = error {
                         self.showErrorAlert(title: "Update Error", error: error)
                         return
-                    } else {
-                        self.product.execution.nextStep()
                     }
-                    tableView.reloadSections([0, 2], with: UITableViewRowAnimation.top)
+                    tableView.reloadData()
                 }
             }
         }

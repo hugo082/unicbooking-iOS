@@ -11,7 +11,8 @@ import UIKit
 class Product: Model {
     
     enum CodingKeys: String, CodingKey  {
-        case id, type, airport, limousine, train, execution, baggage, note, date
+        case id, type, airport, limousine, train
+        case location, execution, baggage, note, date
         case passengers = "customers"
     }
     
@@ -20,6 +21,7 @@ class Product: Model {
     let airport: AirportMetadata?
     let limousine: LimousineMetadata?
     let train: TrainMetadata?
+    let location: String
     let note: String?
     let date: Date
     let execution: Execution
@@ -48,12 +50,16 @@ class Product: Model {
     var icon: UIImage {
         switch self.type.service.type {
         case .airport:
-            return #imageLiteral(resourceName: "icn_flight_arrival")
+            return self.airport?.flight.icon ?? #imageLiteral(resourceName: "icn_flight_arrival")
         case .train:
             return #imageLiteral(resourceName: "icn_train")
         case .limousine:
             return #imageLiteral(resourceName: "icn_car")
         }
+    }
+    
+    var metadata: Metadata? {
+        return self.airport ?? self.limousine ?? self.train
     }
     
     required init(from decoder: Decoder) throws {
@@ -68,6 +74,7 @@ class Product: Model {
         self.airport = try container.decodeIfPresent(AirportMetadata.self, forKey: .airport)
         self.train = try container.decodeIfPresent(TrainMetadata.self, forKey: .train)
         self.limousine = try container.decodeIfPresent(LimousineMetadata.self, forKey: .limousine)
+        self.location = try container.decode(String.self, forKey: .location)
     }
 }
 

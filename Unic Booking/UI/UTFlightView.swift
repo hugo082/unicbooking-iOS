@@ -25,7 +25,7 @@ class UTFlightView: UIView {
         if let flight = self.flight {
             self.isHidden = false
             self.numberLabel.text = flight.codes.master
-            self.timeLabel.text = flight.arrivalTime.timeString()
+            self.timeLabel.text = flight.time.timeString()
         } else {
             self.isHidden = true
         }

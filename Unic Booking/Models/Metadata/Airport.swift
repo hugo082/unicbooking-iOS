@@ -56,7 +56,7 @@ struct AirportMetadata: Model, Metadata {
         
         /// Airport where service take place
         var airport: Airport {
-            return self.type == .arrival ? origin : destination
+            return self.type == .arrival ? destination : origin
         }
     }
     

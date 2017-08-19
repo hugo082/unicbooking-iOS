@@ -9,6 +9,7 @@
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -214,14 +215,22 @@
                                 <action selector="logoutAction:" destination="8Np-w7-qSS" id="eu6-Fm-5Eo"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icn_filter" id="Alq-Qj-bE7">
-                            <connections>
-                                <action selector="filterAction:" destination="8Np-w7-qSS" id="FtJ-jP-nyD"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icn_filter" id="Alq-Qj-bE7">
+                                <connections>
+                                    <action selector="filterAction:" destination="8Np-w7-qSS" id="FtJ-jP-nyD"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="icn_calendar_month" id="qPn-Ht-Q0O">
+                                <connections>
+                                    <action selector="filterDateAction:" destination="8Np-w7-qSS" id="wuV-KZ-lex"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="filterBBI" destination="Alq-Qj-bE7" id="ARR-4q-TDx"/>
+                        <outlet property="filterDateBBI" destination="qPn-Ht-Q0O" id="hA2-VQ-xV3"/>
                         <outlet property="logoutBBI" destination="gk5-Kg-aUf" id="0yv-Yn-Nri"/>
                         <segue destination="z0Y-Ql-bTP" kind="show" identifier="product_details" id="ZsB-eD-49h"/>
                         <segue destination="BYZ-38-t0r" kind="showDetail" identifier="logout" id="VYy-Td-Gfn"/>
@@ -867,6 +876,7 @@
     <resources>
         <image name="back_flight_sunset" width="2511" height="1671"/>
         <image name="icn_baggage" width="31" height="25"/>
+        <image name="icn_calendar_month" width="26" height="26"/>
         <image name="icn_car" width="29" height="26"/>
         <image name="icn_filter" width="26" height="28"/>
     </resources>

@@ -11,13 +11,19 @@ import UIKit
 class ProductListTableViewController: UITableViewController {
     
     typealias ServiceType = Product.Base.Service.ServiceType
+    enum DateFilter {
+        case today, month
+    }
     
     @IBOutlet var logoutBBI: UIBarButtonItem!
     @IBOutlet var filterBBI: UIBarButtonItem!
+    @IBOutlet var filterDateBBI: UIBarButtonItem!
     
     var products: [Product]?
     var data: [[Product]]?
     var selectedProduct: Product?
+    
+    var filters: (ServiceType?, DateFilter) = (nil, .month)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,27 +58,47 @@ class ProductListTableViewController: UITableViewController {
         controller.addAction(UIAlertAction(title: "Airport", style: .default, handler: { _ in self.filter(by: .airport) }))
         controller.addAction(UIAlertAction(title: "Limousine", style: .default, handler: { _ in self.filter(by: .limousine) }))
         controller.addAction(UIAlertAction(title: "Train", style: .default, handler: { _ in self.filter(by: .train) }))
-        controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in self.filter(by: nil) }))
+        controller.addAction(UIAlertAction(title: "All", style: .cancel, handler: { _ in self.filter(by: nil) }))
         self.present(controller, animated: true, completion: nil)
     }
     
+    @IBAction func filterDateAction(_ sender: UIBarButtonItem) {
+        if self.filters.1 == .today {
+            self.filters.1 = .month
+            self.filterDateBBI.image = #imageLiteral(resourceName: "icn_calendar_month")
+        } else {
+            self.filters.1 = .today
+            self.filterDateBBI.image = #imageLiteral(resourceName: "icn_calendar_check")
+        }
+        self.filter()
+    }
+    
     func filter(by serviceType: ServiceType?) {
+        self.filters.0 = serviceType
+        self.filter()
+    }
+    
+    func filter() {
         let products: [Product]
-        if let type = serviceType {
-            products = DataManager.shared.productManager.filter() { product in
+        products = DataManager.shared.productManager.filter() { product in
+            if self.filters.1 == .today && !Calendar.current.isDateInToday(product.date) {
+                return false
+            } else if let type = self.filters.0 {
                 return product.type.service.type == type
             }
-        } else {
-            products = DataManager.shared.productManager.getData()
+            return true
         }
         self.reorderData(products)
     }
     
     func reorderData(_ products: [Product]?) {
         self.data = []
+        let sorted = (products ?? []).sorted(by: { (product1, product2) -> Bool in
+            return product1.date < product2.date
+        })
         var last: Date? = nil
         var buf: [Product] = []
-        for prod in products ?? [] {
+        for prod in sorted {
             last = last ?? prod.date
             if prod.date == last {
                 buf.append(prod)
@@ -127,10 +153,9 @@ class ProductListTableViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetch data ?")
             if let error = error {
-                debugPrint(error)
                 self.showErrorAlert(title: "Loading error", error: error)
             } else {
-                self.reorderData(products)
+                self.filter()
             }
         }
     }

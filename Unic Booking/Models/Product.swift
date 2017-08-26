@@ -10,6 +10,19 @@ import UIKit
 
 class Product: Model {
     
+    static let kSharedId = "product_shared_id"
+    static var shared: Product? = Product.load()
+    
+    static func load() -> Product? {
+        let defaults = UserDefaults.standard
+        if let id = defaults.object(forKey: kSharedId) as? Int {
+            DataManager.shared.productManager.getData(with: id, completionHandler: { (product, error) in
+                Product.shared = product
+            })
+        }
+        return nil
+    }
+    
     enum CodingKeys: String, CodingKey  {
         case id, type, airport, limousine, train
         case location, execution, baggage, note, date
@@ -75,6 +88,22 @@ class Product: Model {
         self.train = try container.decodeIfPresent(TrainMetadata.self, forKey: .train)
         self.limousine = try container.decodeIfPresent(LimousineMetadata.self, forKey: .limousine)
         self.location = try container.decode(String.self, forKey: .location)
+    }
+    
+    // MARK: - Execution Management
+    
+    func start() {
+        Product.shared = self
+        let defaults = UserDefaults.standard
+        defaults.set(self.id, forKey: Product.kSharedId)
+        defaults.synchronize()
+    }
+    
+    func end() {
+        Product.shared = nil
+        let defaults = UserDefaults.standard
+        defaults.set(nil, forKey: Product.kSharedId)
+        defaults.synchronize()
     }
 }
 

@@ -112,11 +112,16 @@ class ProductDetailsTableViewController: UITableViewController {
     // MARK: - Actions
     
     @objc func startAction(_ sender: UIBarButtonItem) {
+        if let product = Product.shared {
+            self.showAlert(title: "Error", message: "You have already started an execution : \(product.id)")
+            return
+        }
         ApiManager.shared.update(self.product.execution) { error in
             if let error = error {
                 self.showErrorAlert(title: "Update Error", error: error)
                 return
             } else {
+                self.product.start()
                 self.tableView.reloadSections([0, 2], with: UITableViewRowAnimation.top)
             }
         }

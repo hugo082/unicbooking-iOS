@@ -118,15 +118,12 @@ class ApiManager {
     
     func detail<Type: Model>(model: Type, completionHandler: @escaping (Type?, Error?) -> Void) {
         guard let url = self.getUrl(model) else { return }
-        self.coreRequest(type: Type.self, url: url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers) { object, error in
-            if let object = object {
-                let manager = DataManager.shared.manager(object: type(of: model))
-                manager?.push(object: object)
-                completionHandler(object, nil)
-            } else {
-                completionHandler(nil, error)
-            }
-        }
+        self.coreDetail(model: type(of: model), url: url, completionHandler: completionHandler)
+    }
+    
+    func detail<Type: Model>(model:  Type.Type, id: Int, completionHandler: @escaping (Type?, Error?) -> Void) {
+        guard let url = self.getUrl(model, id: id) else { return }
+        self.coreDetail(model: model, url: url, completionHandler: completionHandler)
     }
     
     func update<Type: Updatable>(model: Type, completionHandler: @escaping (Error?) -> Void) {
@@ -141,6 +138,18 @@ class ApiManager {
     }
     
     // MARK: Core Request
+    
+    func coreDetail<Type: Model>(model: Type.Type, url: String, completionHandler: @escaping (Type?, Error?) -> Void) {
+        self.coreRequest(type: Type.self, url: url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers) { object, error in
+            if let object = object {
+                let manager = DataManager.shared.manager(object: model)
+                manager?.push(object: object)
+                completionHandler(object, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+    }
     
     func coreRequest<Type: Decodable>(type: Type.Type, url: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding, headers: HTTPHeaders?, completionHandler: @escaping (Type?, Error?) -> Void) {
         self.coreRequest(url: url, method: method, parameters: parameters, encoding: encoding, headers: headers) { data, error in
@@ -176,6 +185,11 @@ class ApiManager {
     }
     
     // MARK: - Url
+    
+    func getUrl(_ model: Model.Type, id: Int) -> String? {
+        guard let url = self.getUrl(model) else { return nil}
+        return url + "/\(id)"
+    }
     
     func getUrl(_ model: Model) -> String? {
         guard let url = self.getUrl(type(of: model)) else { return nil}

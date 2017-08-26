@@ -21,15 +21,6 @@ class ModelManager<Type:Model> {
         self.isLoaded = isLoaded
     }
     
-    func getData(with id: Int) -> Type? {
-        for (_, object) in self.data {
-            if object.id == id {
-                return object
-            }
-        }
-        return nil
-    }
-    
     func push(objects: [Type]) {
         for object in objects {
             self.push(object: object)
@@ -42,12 +33,24 @@ class ModelManager<Type:Model> {
     
     func getData(force: Bool = false, completionHandler: @escaping ([Type]?, Error?) -> Void) {
         if force || !self.isLoaded {
-            ApiManager.shared.list(model: Type.self) { objects, error in
-                completionHandler(objects, error)
-            }
+            ApiManager.shared.list(model: Type.self, completionHandler: completionHandler)
         } else {
             completionHandler(self.getData(), nil)
         }
+    }
+    
+    func getData(with id: Int, force: Bool = false, completionHandler: @escaping (Type?, Error?) -> Void) {
+        if force {
+            ApiManager.shared.detail(model: Type.self, id: id, completionHandler: completionHandler)
+            return
+        }
+        for (_, object) in self.data {
+            if object.id == id {
+                completionHandler(object, nil)
+                return
+            }
+        }
+        ApiManager.shared.detail(model: Type.self, id: id, completionHandler: completionHandler)
     }
     
     func getData() -> [Type] {

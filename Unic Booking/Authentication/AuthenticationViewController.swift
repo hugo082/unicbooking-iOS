@@ -56,6 +56,7 @@ class AuthenticationViewController: UIViewController {
             } else {
                 UILoadingView.shared.dismissLoader() {
                     User.shared = user
+                    Product.load()
                     self.performSegue(withIdentifier: "main_list", sender: self)
                 }
             }

@@ -8,19 +8,18 @@
 
 import UIKit
 
-class Product: Model {
+class Product: Model, Updatable {
     
     static let kSharedId = "product_shared_id"
-    static var shared: Product? = Product.load()
+    static var shared: Product? = nil
     
-    static func load() -> Product? {
+    static func load() {
         let defaults = UserDefaults.standard
         if let id = defaults.object(forKey: kSharedId) as? Int {
             DataManager.shared.productManager.getData(with: id, completionHandler: { (product, error) in
                 Product.shared = product
             })
         }
-        return nil
     }
     
     enum CodingKeys: String, CodingKey  {
@@ -30,16 +29,16 @@ class Product: Model {
     }
     
     let id: Int
-    let type: Base
-    let airport: AirportMetadata?
-    let limousine: LimousineMetadata?
-    let train: TrainMetadata?
-    let location: String
-    let note: String?
-    let date: Date
-    let execution: Execution
-    let passengers: [Passenger]
-    let baggage: Int
+    var type: Base
+    var airport: AirportMetadata?
+    var limousine: LimousineMetadata?
+    var train: TrainMetadata?
+    var location: String
+    var note: String?
+    var date: Date
+    var execution: Execution
+    var passengers: [Passenger]
+    var baggage: Int
     
     var isAirport: Bool {
         return self.type.service.type == .airport
@@ -104,6 +103,20 @@ class Product: Model {
         let defaults = UserDefaults.standard
         defaults.set(nil, forKey: Product.kSharedId)
         defaults.synchronize()
+    }
+    
+    // MARK: - Update
+    
+    func update(from object: Product) {
+        self.baggage = object.baggage
+        self.airport = object.airport
+        self.limousine = object.limousine
+        self.train = object.train
+        self.location = object.location
+        self.note = object.note
+        self.date = object.date
+        self.execution = object.execution
+        self.passengers = object.passengers
     }
 }
 

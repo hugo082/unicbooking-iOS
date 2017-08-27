@@ -121,19 +121,19 @@ class ApiManager {
         self.coreDetail(model: type(of: model), url: url, completionHandler: completionHandler)
     }
     
-    func detail<Type: Model>(model:  Type.Type, id: Int, completionHandler: @escaping (Type?, Error?) -> Void) {
+    func detail<Type: Model>(model: Type.Type, id: Int, completionHandler: @escaping (Type?, Error?) -> Void) {
         guard let url = self.getUrl(model, id: id) else { return }
         self.coreDetail(model: model, url: url, completionHandler: completionHandler)
     }
     
-    func update<Type: Updatable>(model: Type, completionHandler: @escaping (Error?) -> Void) {
+    func update<Type: Updatable>(model: Type, parameters: Parameters?, completionHandler: ((Error?) -> Void)?) {
         guard let url = self.getUrl(model) else { return }
-        self.coreRequest(type: Type.self, url: url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: self.headers) { object, error in
+        self.coreRequest(type: Type.self, url: url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers) { object, error in
             if let object = object {
                 model.update(from: object)
-                completionHandler(nil)
+                completionHandler?(nil)
             }
-            completionHandler(error)
+            completionHandler?(error)
         }
     }
     

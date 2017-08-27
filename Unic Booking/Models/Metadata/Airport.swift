@@ -76,4 +76,10 @@ struct AirportMetadata: Model, Metadata {
     var mainAirport: Airport {
         return self.flight.airport
     }
+    
+    func configure(alert: UIAlertController) {
+        alert.message = "Start time : \(Date().timeString())"
+    }
+    
+    func sendData(product: Product, data: Any?) {}
 }

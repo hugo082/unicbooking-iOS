@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol Metadata {
     
     var time: Date? { get }
     
+    func configure(alert: UIAlertController)
+    func sendData(product: Product, data: Any?)
 }

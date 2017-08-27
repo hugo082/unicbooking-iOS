@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct LimousineMetadata: Model, Metadata {
     
@@ -28,5 +29,21 @@ struct LimousineMetadata: Model, Metadata {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         self.time = formatter.date(from: timeString)
+    }
+    
+    func configure(alert: UIAlertController) {
+        alert.addTextField { (textField) in
+            textField.placeholder = "Kilometrage"
+        }
+    }
+    
+    func sendData(product: Product, data: Any?) {
+        if let data = data as? String {
+            ApiManager.shared.update(model: product, parameters: [
+                "limousine": [
+                    "start_mileage": data
+                ]
+            ], completionHandler: nil)
+        }
     }
 }

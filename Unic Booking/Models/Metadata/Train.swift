@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct TrainMetadata: Decodable, Metadata {
     
@@ -31,4 +32,6 @@ struct TrainMetadata: Decodable, Metadata {
         }
     }
     
+    func configure(alert: UIAlertController) {}
+    func sendData(product: Product, data: Any?) {}
 }

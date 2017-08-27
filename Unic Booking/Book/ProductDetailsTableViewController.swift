@@ -116,20 +116,34 @@ class ProductDetailsTableViewController: UITableViewController {
             self.showAlert(title: "Error", message: "You have already started an execution : \(product.id)")
             return
         }
+        let alert = UIAlertController(title: "Confirm", message: "Start this mission", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.product.metadata?.configure(alert: alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
+            self.executeStart(alert.textFields?.first?.text)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func executeStart(_ data: Any?) {
+        self.product.metadata?.sendData(product: self.product, data: data)
         ApiManager.shared.update(self.product.execution) { error in
             if let error = error {
                 self.showErrorAlert(title: "Update Error", error: error)
                 return
             } else {
                 self.product.start()
-                self.tableView.reloadSections([0, 2], with: UITableViewRowAnimation.top)
+                self.tableView.reloadData()
             }
         }
     }
     
     @objc func refreshData(_ sender: UIRefreshControl) {
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetching data...")
-        ApiManager.shared.update(model: self.product.execution) { error in
+        ApiManager.shared.detail(model: self.product.execution) { (object, error) in
+            if let object = object {
+                self.product.execution.update(from: object)
+            }
             self.refreshControl?.endRefreshing()
             self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetch data ?")
             self.tableView.reloadData()

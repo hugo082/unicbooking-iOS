@@ -97,6 +97,10 @@ class ProductDetailsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ExecutionStepTableViewCell {
+            if (cell.step?.isFinish ?? false) && self.product.execution.isStarted {
+                self.confirmFinish()
+                return
+            }
             if (self.product.execution.complete(step: cell.step!)) {
                 ApiManager.shared.update(self.product.execution) { error in
                     if let error = error {
@@ -136,6 +140,15 @@ class ProductDetailsTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func confirmFinish() {
+        let alert = UIAlertController(title: "Confirm", message: "Finish this mission", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
+            self.product.finish()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func refreshData(_ sender: UIRefreshControl) {

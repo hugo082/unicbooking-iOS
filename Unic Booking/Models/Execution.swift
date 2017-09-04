@@ -12,8 +12,13 @@ class Execution: Model, Updatable, CustomStringConvertible {
     
     class Step: Model {
         
+        enum Tag: String, Decodable {
+            case finish = "finish"
+            case linkInfo = "link_info"
+        }
+        
         enum CodingKeys: String, CodingKey  {
-            case id, title, note, iconName = "icon_name"
+            case id, title, note, tag, iconName = "icon_name"
             case finishTime = "finish_time"
         }
         
@@ -22,12 +27,17 @@ class Execution: Model, Updatable, CustomStringConvertible {
         let iconName: String
         var finishTime: Date?
         var note: String?
+        var tag: Tag?
+        var tagData: [String]?
         
         var icon: UIImage? {
             return UIImage(named: self.iconName)
         }
         var castedNote: String? {
             return self.note != "" ? self.note : nil
+        }
+        var isFinish: Bool {
+            return self.tag == .finish
         }
         
         required init(from decoder: Decoder) throws {
@@ -37,6 +47,11 @@ class Execution: Model, Updatable, CustomStringConvertible {
             self.finishTime = try container.decodeIfPresent(Date.self, forKey: .finishTime)
             self.note = try container.decodeIfPresent(String.self, forKey: .note)
             self.iconName = try container.decode(String.self, forKey: .iconName)
+            let tagRaw = try container.decodeIfPresent(String.self, forKey: .tag)
+            self.tagData = tagRaw?.components(separatedBy: "$")
+            if let tagID = self.tagData?[0] {
+                self.tag = Tag(rawValue: tagID)
+            }
         }
     }
     
@@ -63,6 +78,9 @@ class Execution: Model, Updatable, CustomStringConvertible {
     }
     var state: State
     var steps: [Step]
+    var isStarted: Bool {
+        return self.currentStepIndex != nil
+    }
     
     func getStepWithNote() -> [Step] {
         return self.steps.filter() { step in
@@ -76,10 +94,6 @@ class Execution: Model, Updatable, CustomStringConvertible {
             return true
         }
         return false
-    }
-    
-    func nextStep() {
-        self.currentStepIndex = (self.currentStepIndex ?? -1) + 1
     }
     
     // Mark: - Updatable

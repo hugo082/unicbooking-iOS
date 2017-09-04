@@ -25,7 +25,7 @@ class Product: Model, Updatable {
     enum CodingKeys: String, CodingKey  {
         case id, type, airport, limousine, train
         case location, execution, baggage, note, date
-        case passengers = "customers"
+        case passengers = "customers", linked
     }
     
     let id: Int
@@ -39,6 +39,7 @@ class Product: Model, Updatable {
     var execution: Execution
     var passengers: [Passenger]
     var baggage: Int
+    var linked: Product?
     
     var isAirport: Bool {
         return self.type.service.type == .airport
@@ -87,9 +88,14 @@ class Product: Model, Updatable {
         self.train = try container.decodeIfPresent(TrainMetadata.self, forKey: .train)
         self.limousine = try container.decodeIfPresent(LimousineMetadata.self, forKey: .limousine)
         self.location = try container.decode(String.self, forKey: .location)
+        self.linked = try container.decodeIfPresent(Product.self, forKey: .linked)
     }
     
     // MARK: - Execution Management
+    
+    func getStep() {
+        
+    }
     
     func start() {
         Product.shared = self
@@ -98,7 +104,7 @@ class Product: Model, Updatable {
         defaults.synchronize()
     }
     
-    func end() {
+    func finish() {
         Product.shared = nil
         let defaults = UserDefaults.standard
         defaults.set(nil, forKey: Product.kSharedId)

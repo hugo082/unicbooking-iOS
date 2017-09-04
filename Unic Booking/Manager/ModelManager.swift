@@ -29,6 +29,9 @@ class ModelManager<Type:Model> {
     
     func push(object: Type) {
         self.data[object.id] = object
+        if let link = (object as? Product)?.linked {
+            DataManager.shared.manager(object: Product.self)?.push(object: link)
+        }
     }
     
     func getData(force: Bool = false, completionHandler: @escaping ([Type]?, Error?) -> Void) {

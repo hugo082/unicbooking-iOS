@@ -13,6 +13,7 @@ class ExecutionStepTableViewCell: UITableViewCell {
     @IBOutlet var iconView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var actionButton: UIButton!
     
     var step: Execution.Step?
     
@@ -44,11 +45,19 @@ class ExecutionStepTableViewCell: UITableViewCell {
                 self.timeLabel.isHidden = true
             }
         }
+        self.configureAction()
     }
     
     func finish() {
         self.iconView?.backgroundColor = UIConstants.Color.GREEN_SUCCESS_BACKGROUND
         self.titleLabel.textColor = UIConstants.Color.GRAY_PLACEHOLDER
     }
-
+    
+    func configureAction() {
+        if self.step?.tag == .linkInfo {
+            self.actionButton.setTitle("Call", for: .normal)
+        } else {
+            self.actionButton.isHidden = true
+        }
+    }
 }

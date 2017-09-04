@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -292,29 +293,44 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XfQ-pb-1X0">
-                                            <rect key="frame" x="300" y="0.0" width="75" height="74.5"/>
+                                            <rect key="frame" x="234" y="0.0" width="75" height="74.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y86-i1-LUT">
+                                            <rect key="frame" x="317" y="22.5" width="50" height="30"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="50" id="njj-Yf-4Tn"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="r4N-eG-F7x"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <state key="normal" title="Action"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="hE2-O4-LJa" firstAttribute="width" secondItem="uRg-6k-jic" secondAttribute="height" multiplier="1:1" id="1vO-Ga-qdQ"/>
+                                        <constraint firstItem="Y86-i1-LUT" firstAttribute="centerY" secondItem="uRg-6k-jic" secondAttribute="centerY" id="6KR-Fr-dcN"/>
                                         <constraint firstAttribute="bottom" secondItem="Y9a-nS-Tmh" secondAttribute="bottom" constant="16" id="8xM-I5-Fai"/>
                                         <constraint firstAttribute="bottom" secondItem="XfQ-pb-1X0" secondAttribute="bottom" id="B8L-tf-QT2"/>
                                         <constraint firstItem="XfQ-pb-1X0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y9a-nS-Tmh" secondAttribute="trailing" constant="8" id="Fah-VF-QsI"/>
                                         <constraint firstItem="XfQ-pb-1X0" firstAttribute="top" secondItem="uRg-6k-jic" secondAttribute="top" id="Go7-kU-oxw"/>
-                                        <constraint firstAttribute="trailing" secondItem="XfQ-pb-1X0" secondAttribute="trailing" id="Igz-Vy-4Wl"/>
                                         <constraint firstAttribute="bottom" secondItem="hE2-O4-LJa" secondAttribute="bottom" id="Jas-10-9op"/>
+                                        <constraint firstItem="Y86-i1-LUT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uRg-6k-jic" secondAttribute="topMargin" id="KdW-zM-ctu"/>
                                         <constraint firstItem="hE2-O4-LJa" firstAttribute="leading" secondItem="uRg-6k-jic" secondAttribute="leading" id="Kza-0C-arn"/>
                                         <constraint firstItem="Y9a-nS-Tmh" firstAttribute="leading" secondItem="hE2-O4-LJa" secondAttribute="trailing" constant="16" id="NDZ-bq-IxZ"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Y86-i1-LUT" secondAttribute="bottom" id="OjK-76-u0J"/>
                                         <constraint firstItem="XfQ-pb-1X0" firstAttribute="width" secondItem="uRg-6k-jic" secondAttribute="width" multiplier="0.2" id="Yrq-2R-w1e"/>
                                         <constraint firstItem="hE2-O4-LJa" firstAttribute="top" secondItem="uRg-6k-jic" secondAttribute="top" id="ekJ-sI-bHT"/>
+                                        <constraint firstItem="Y86-i1-LUT" firstAttribute="leading" secondItem="XfQ-pb-1X0" secondAttribute="trailing" constant="8" id="exo-Fa-nrN"/>
+                                        <constraint firstItem="Y86-i1-LUT" firstAttribute="trailing" secondItem="uRg-6k-jic" secondAttribute="trailingMargin" id="tDx-01-63E"/>
                                         <constraint firstItem="Y9a-nS-Tmh" firstAttribute="top" secondItem="uRg-6k-jic" secondAttribute="top" constant="16" id="xfe-8e-kZs"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
+                                    <outlet property="actionButton" destination="Y86-i1-LUT" id="Xr3-Rt-QRv"/>
                                     <outlet property="iconView" destination="hE2-O4-LJa" id="wti-GK-M90"/>
                                     <outlet property="timeLabel" destination="XfQ-pb-1X0" id="GuZ-Xt-1jt"/>
                                     <outlet property="titleLabel" destination="Y9a-nS-Tmh" id="HQw-93-gHT"/>

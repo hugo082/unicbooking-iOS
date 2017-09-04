@@ -26,6 +26,7 @@ class Product: Model, Updatable {
         case id, type, airport, limousine, train
         case location, execution, baggage, note, date
         case passengers = "customers", linked
+        case driver, greeter
     }
     
     let id: Int
@@ -36,6 +37,8 @@ class Product: Model, Updatable {
     var location: String
     var note: String?
     var date: Date
+    var driver: User?
+    var greeter: User?
     var execution: Execution
     var passengers: [Passenger]
     var baggage: Int
@@ -83,6 +86,8 @@ class Product: Model, Updatable {
         self.date = try container.decode(Date.self, forKey: .date)
         self.baggage = try container.decode(Int.self, forKey: .baggage)
         self.passengers = try container.decode([Passenger].self, forKey: .passengers)
+        self.driver = try container.decodeIfPresent(User.self, forKey: .driver)
+        self.greeter = try container.decodeIfPresent(User.self, forKey: .greeter)
         self.execution = try container.decode(Execution.self, forKey: .execution)
         self.airport = try container.decodeIfPresent(AirportMetadata.self, forKey: .airport)
         self.train = try container.decodeIfPresent(TrainMetadata.self, forKey: .train)

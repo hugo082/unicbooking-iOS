@@ -81,6 +81,9 @@ class ProductDetailsTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.step.rawValue, for: indexPath) as! ExecutionStepTableViewCell
             cell.step = self.product.execution.steps[indexPath.row]
             cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1, baggages: self.product.baggage)
+            if cell.step?.tag == .linkInfo {
+                cell.actionButton.addTarget(self, action: #selector(linkAction(_:)), for: .touchUpInside)
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.note.rawValue, for: indexPath) as! NoteTableViewCell
@@ -162,5 +165,32 @@ class ProductDetailsTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    @objc func linkAction(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Contact Greeter/Driver to next mission", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        if let driver = self.product.driver {
+            alert.addAction(UIAlertAction(title: driver.phoneDescription, style: .default, handler: { (action) in
+                self.call(user: driver)
+            }))
+        }
+        if let greeter = self.product.greeter {
+            alert.addAction(UIAlertAction(title: greeter.phoneDescription, style: .default, handler: { (action) in
+                self.call(user: greeter)
+            }))
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
 
+    private func call(user: User) {
+        if let url = URL(string: "tel://\(user.normalizePhone)"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        } else {
+            self.showAlert(title: "Error", message: "Impossible to call number \(user.normalizePhone)")
+        }
+    }
 }

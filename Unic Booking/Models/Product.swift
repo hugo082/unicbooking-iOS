@@ -73,6 +73,12 @@ class Product: Model, Updatable {
             return #imageLiteral(resourceName: "icn_car")
         }
     }
+    var employee: User? {
+        if self.isLimousine {
+            return self.driver
+        }
+        return self.greeter
+    }
     
     var metadata: Metadata? {
         return self.airport ?? self.limousine ?? self.train

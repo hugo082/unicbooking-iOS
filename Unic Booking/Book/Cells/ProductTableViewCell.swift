@@ -16,6 +16,7 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var stateView: UIView!
     @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var employeeLabel: UILabel!
     
     var product: Product? {
         didSet {
@@ -30,5 +31,6 @@ class ProductTableViewCell: UITableViewCell {
         self.informationLabel.text = "\(self.product?.passengers.count ?? 0) people • \(self.product?.baggage ?? 0) bagages"
         self.timeLabel.text = self.product?.time?.timeString() ?? " - "
         self.locationLabel.text = self.product?.airport?.mainAirport.codes.master ?? self.product?.location
+        self.employeeLabel.text = self.product?.employee?.username ?? " - "
     }
 }

@@ -15,7 +15,7 @@ class Execution: Model, Updatable, CustomStringConvertible {
         enum Tag: String, Decodable {
             case finish = "finish"
             case linkInfo = "link_info"
-            case addStop = "add_stop"
+            case addStop = "add_stop", limousineStop = "lim_stop"
         }
         
         enum CodingKeys: String, CodingKey  {
@@ -87,6 +87,15 @@ class Execution: Model, Updatable, CustomStringConvertible {
         return self.steps.filter() { step in
             return step.note != nil && step.note != "" && step.id != (self.currentStep?.id ?? -1)
         }
+    }
+    
+    func getStep(with id: Int) -> Step? {
+        for step in self.steps {
+            if step.id == id {
+                return step
+            }
+        }
+        return nil
     }
     
     func complete(step: Step) -> Bool {

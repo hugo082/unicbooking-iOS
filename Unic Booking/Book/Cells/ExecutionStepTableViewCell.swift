@@ -54,8 +54,11 @@ class ExecutionStepTableViewCell: UITableViewCell {
     }
     
     func configureAction() {
+        self.actionButton.tag = self.step?.id ?? 0
         if self.step?.tag == .linkInfo {
             self.actionButton.setTitle("Call", for: .normal)
+        } else if self.step?.tag == .limousineStop {
+          self.actionButton.setTitle("GO", for: .normal)
         } else {
             self.actionButton.isHidden = true
         }

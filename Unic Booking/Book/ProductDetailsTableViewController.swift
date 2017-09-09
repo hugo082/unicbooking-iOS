@@ -83,6 +83,8 @@ class ProductDetailsTableViewController: UITableViewController {
             cell.computeStep(with: indexPath.row, currentStep: self.product.execution.currentStepIndex ?? -1, baggages: self.product.baggage)
             if cell.step?.tag == .linkInfo {
                 cell.actionButton.addTarget(self, action: #selector(linkAction(_:)), for: .touchUpInside)
+            } else if cell.step?.tag == .limousineStop {
+                cell.actionButton.addTarget(self, action: #selector(iteneraryAction(_:)), for: .touchUpInside)
             }
             return cell
         }
@@ -189,6 +191,25 @@ class ProductDetailsTableViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetch data ?")
             self.tableView.reloadData()
+        }
+    }
+    
+    @objc func iteneraryAction(_ sender: UIButton) {
+        guard let location = self.product.execution.getStep(with: sender.tag)?.title else {
+            self.showAlert(title: "Error", message: "Impossible to load loaction")
+            return
+        }
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressDictionary([
+            "Street" : location
+        ]) { (placemarks, error) in
+            if let placemark = placemarks?.first {
+                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placemark))
+                mapItem.name = location
+                mapItem.openInMaps(launchOptions: [:])
+            } else {
+                self.showErrorAlert(title: "Error", error: error)
+            }
         }
     }
     

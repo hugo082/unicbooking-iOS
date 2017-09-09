@@ -16,6 +16,16 @@ class RecapTableViewCell: UITableViewCell, RecapCell {
     @IBOutlet var passengersDetailsLabel: UILabel!
     @IBOutlet var timeButton: UIButton!
     
+    @IBOutlet var title1: UILabel!
+    @IBOutlet var title2: UILabel!
+    @IBOutlet var title3: UILabel!
+    @IBOutlet var title4: UILabel!
+    
+    @IBOutlet var value1: UILabel!
+    @IBOutlet var value2: UILabel!
+    @IBOutlet var value3: UILabel!
+    @IBOutlet var value4: UILabel!
+    
     var controller: UIViewController?
     var product: Product? {
         didSet {
@@ -31,8 +41,9 @@ class RecapTableViewCell: UITableViewCell, RecapCell {
             return
         }
         self.passengersDetailsLabel.text = self.passengerDetails(prod)
-        self.serviceDetailsLabel.text = self.serviceDetails(prod)
-        self.timeButton.setTitle(self.product?.time?.timeString(), for: .normal)
+//        self.serviceDetailsLabel.text = self.serviceDetails(prod)
+        self.serviceDetails(prod)
+        //self.timeButton.setTitle(self.product?.time?.timeString(), for: .normal)
     }
     
     @IBAction func timeAction(_ sender: UIButton) {
@@ -62,31 +73,52 @@ class RecapTableViewCell: UITableViewCell, RecapCell {
         for passenger in product.passengers {
             content += passenger.fullName + "\n"
         }
-        if let limousineMet = self.metadata as? LimousineMetadata {
-            content += "\nPick up: " + limousineMet.pickUp + "\n"
-            content += "Drop off: " + limousineMet.dropOff
-        }
         return content
     }
     
-    func serviceDetails(_ product: Product) -> String? {
-        var content = ""
+    func serviceDetails(_ product: Product) {
+        let time = product.time?.timeString() ?? "-"
         if let airportMet = self.metadata as? AirportMetadata {
-            content += recap(airportMet.flight)
-            if let flight = airportMet.flightTransit {
-                content += "\n" + recap(flight)
-            }
-        } else if product.isLimousine {
-            content += product.type.name
+            self.title1.text = "flight"
+            self.value1.text = recap(airportMet.flight)
+            
+            self.title2.text = "transit"
+            self.value2.text = recap(airportMet.flightTransit)
+            
+            self.title3.text = "time/loc"
+            self.value3.text = time + " " + product.location
+            
+            self.title4.text = "greeter"
+            self.value4.text = product.greeter?.username ?? "-"
+        } else if let limousineMet = self.metadata as? LimousineMetadata {
+            self.title1.text = "time/loc"
+            self.value1.text = time + " " + product.location
+            
+            self.title2.text = "pickUp"
+            self.value2.text = limousineMet.pickUp
+            
+            self.title3.text = "dropOff"
+            self.value3.text = limousineMet.dropOff
+            
+            self.title4.text = "driver"
+            self.value4.text = product.driver?.username ?? "-"
         } else if let trainMet = self.metadata as? TrainMetadata {
-            content += trainMet.code ?? " - "
-            content += "\n" + (trainMet.station ?? " - ")
+            self.title1.text = "time/loc"
+            self.value1.text = time + " " + product.location
+            
+            self.title2.text = "code"
+            self.value2.text = trainMet.code ?? "-"
+            
+            self.title4.text = "greeter"
+            self.value4.text = product.greeter?.username ?? "-"
         }
-        return content
     }
     
-    func recap(_ flight: AirportMetadata.Flight) -> String {
-        return flight.codes.master + " " + flight.airport.codes.master
+    func recap(_ flight: AirportMetadata.Flight?) -> String {
+        if let flight = flight {
+            return flight.codes.master + " " + flight.airport.codes.master
+        }
+        return "-"
     }
     
     func computeLocation(name: String, location: String) {

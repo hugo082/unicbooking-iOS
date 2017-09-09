@@ -40,8 +40,7 @@ class ProductDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.statusLabel.text = product.execution.state.rawValue
-        self.statusLabel.backgroundColor = UIConstants.Color.get(with: product.execution.state)
+        self.updateView(false)
         
         self.enableTouchesDismiss()
         self.tableView.refreshControl = UIRefreshControl()
@@ -52,6 +51,14 @@ class ProductDetailsTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 100
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Start", style: .plain, target: self, action: #selector(startAction(_:)))
+    }
+    
+    func updateView(_ table: Bool = true) {
+        self.statusLabel.text = product.execution.state.rawValue
+        self.statusLabel.backgroundColor = UIConstants.Color.get(with: product.execution.state)
+        if table {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -138,7 +145,7 @@ class ProductDetailsTableViewController: UITableViewController {
                 return
             } else {
                 self.product.start()
-                self.tableView.reloadData()
+                self.updateView()
             }
         }
     }
@@ -148,7 +155,13 @@ class ProductDetailsTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
             self.product.finish()
-            self.updateState(step: step)
+            ApiManager.shared.finish(self.product.execution) { error in
+                if let error = error {
+                    self.showErrorAlert(title: "Update Error", error: error)
+                    return
+                }
+                self.updateView()
+            }
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -160,7 +173,7 @@ class ProductDetailsTableViewController: UITableViewController {
                     self.showErrorAlert(title: "Update Error", error: error)
                     return
                 }
-                self.tableView.reloadData()
+                self.updateView()
             }
         }
     }
@@ -175,7 +188,7 @@ class ProductDetailsTableViewController: UITableViewController {
                         } else if let product = product {
                             self.product = product
                         }
-                        self.tableView.reloadData()
+                        self.updateView()
                     })
                 })
             } else {
@@ -192,7 +205,7 @@ class ProductDetailsTableViewController: UITableViewController {
             }
             self.refreshControl?.endRefreshing()
             self.refreshControl?.attributedTitle = NSAttributedString(string: "Fetch data ?")
-            self.tableView.reloadData()
+            self.updateView()
         }
     }
     
@@ -224,7 +237,7 @@ class ProductDetailsTableViewController: UITableViewController {
                     if let error = error {
                         self.showErrorAlert(title: "Error", error: error)
                     }
-                    self.tableView.reloadData()
+                    self.updateView()
                 })
             } else {
                 self.showAlert(title: "Error", message: "Impossible to convert data to number")

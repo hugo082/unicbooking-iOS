@@ -34,6 +34,7 @@ struct LimousineMetadata: Model, Metadata {
     func configure(alert: UIAlertController) {
         alert.addTextField { (textField) in
             textField.placeholder = "Kilometrage"
+            textField.keyboardType = .numberPad
         }
     }
     

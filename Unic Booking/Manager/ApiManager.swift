@@ -106,6 +106,16 @@ class ApiManager {
         }
     }
     
+    func finish(_ execution: Execution, completionHandler: @escaping (Error?) -> Void) {
+        guard let url = self.getUrl(execution) else { return }
+        self.coreRequest(type: Execution.self, url: url, method: .put, parameters: ["current_step" : 99, "note" : ""], encoding: URLEncoding.default, headers: self.headers) { object, error in
+            if let object = object {
+                execution.update(from: object)
+            }
+            completionHandler(error)
+        }
+    }
+    
     // MARK: - Genrics
     
     func list<Type: Model>(model: Type.Type, completionHandler: @escaping ([Type]?, Error?) -> Void) {
@@ -182,8 +192,7 @@ class ApiManager {
     }
     
     func coreRequest(url: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding, headers: HTTPHeaders?, completionHandler: @escaping (Data?, Error?) -> Void) {
-        Alamofire.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers).responseString { response in
-            debugPrint(response)
+        Alamofire.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers).validate().responseString { response in
             switch response.result {
             case .success:
                 guard let jsonData = response.result.value?.data(using: .utf8) else {

@@ -59,6 +59,8 @@ class ExecutionStepTableViewCell: UITableViewCell {
             self.actionButton.setTitle("Call", for: .normal)
         } else if self.step?.tag == .limousineStop {
           self.actionButton.setTitle("GO", for: .normal)
+        } else if self.step?.tag == .bagCount {
+            self.actionButton.setTitle("Edit", for: .normal)
         } else {
             self.actionButton.isHidden = true
         }

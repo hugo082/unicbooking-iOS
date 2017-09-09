@@ -49,6 +49,7 @@ extension UIViewController {
     }
     
     func promptData(title: String?, message: String?, cancel: String?, placeholder: String?, confirm: String?,
+                    configure: ((UITextField) -> Void)? = nil,
                     completion: @escaping (String?) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if let cancel = cancel {
@@ -56,6 +57,7 @@ extension UIViewController {
         }
         alert.addTextField { (textField) in
             textField.placeholder = placeholder
+            configure?(textField)
         }
         alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { (action) in
             completion(alert.textFields?.first?.text)

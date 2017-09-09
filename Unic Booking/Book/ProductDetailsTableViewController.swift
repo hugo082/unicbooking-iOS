@@ -85,6 +85,8 @@ class ProductDetailsTableViewController: UITableViewController {
                 cell.actionButton.addTarget(self, action: #selector(linkAction(_:)), for: .touchUpInside)
             } else if cell.step?.tag == .limousineStop {
                 cell.actionButton.addTarget(self, action: #selector(iteneraryAction(_:)), for: .touchUpInside)
+            } else if cell.step?.tag == .bagCount {
+                cell.actionButton.addTarget(self, action: #selector(bagAction(_:)), for: .touchUpInside)
             }
             return cell
         }
@@ -209,6 +211,23 @@ class ProductDetailsTableViewController: UITableViewController {
                 mapItem.openInMaps(launchOptions: [:])
             } else {
                 self.showErrorAlert(title: "Error", error: error)
+            }
+        }
+    }
+    
+    @objc func bagAction(_ sender: UIButton) {
+        self.promptData(title: "Baggages", message: nil, cancel: "Cancel", placeholder: "Bag count", confirm: "Confirm", configure: { textField in
+            textField.keyboardType = .numberPad
+        }) { (data) in
+            if let bag = Int(data ?? "a") {
+                ApiManager.shared.update(model: self.product, parameters: ["baggages": String(bag)], completionHandler: { (error) in
+                    if let error = error {
+                        self.showErrorAlert(title: "Error", error: error)
+                    }
+                    self.tableView.reloadData()
+                })
+            } else {
+                self.showAlert(title: "Error", message: "Impossible to convert data to number")
             }
         }
     }

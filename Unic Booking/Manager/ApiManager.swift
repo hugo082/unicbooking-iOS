@@ -182,7 +182,8 @@ class ApiManager {
     }
     
     func coreRequest(url: URLConvertible, method: HTTPMethod, parameters: Parameters?, encoding: ParameterEncoding, headers: HTTPHeaders?, completionHandler: @escaping (Data?, Error?) -> Void) {
-        Alamofire.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers).validate().responseString { response in
+        Alamofire.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers).responseString { response in
+            debugPrint(response)
             switch response.result {
             case .success:
                 guard let jsonData = response.result.value?.data(using: .utf8) else {

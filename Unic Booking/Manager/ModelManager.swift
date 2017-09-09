@@ -11,12 +11,14 @@ import Foundation
 class ModelManager<Type:Model> {
     
     private var data: [Int:Type]
+    var statistics: [String:StatisticManager<Type, Int>]
     var isLoaded: Bool
     var isEmpty: Bool {
         return self.data.isEmpty
     }
     
     init(data: [Int:Type] = [:], isLoaded: Bool = false) {
+        self.statistics = [:]
         self.data = data
         self.isLoaded = isLoaded
     }
@@ -30,7 +32,7 @@ class ModelManager<Type:Model> {
     func push(object: Type) {
         self.data[object.id] = object
         if let link = (object as? Product)?.linked {
-            DataManager.shared.manager(object: Product.self)?.push(object: link)
+            DataManager.shared.productManager.push(object: link)
         }
     }
     
@@ -69,4 +71,21 @@ class ModelManager<Type:Model> {
         self.isLoaded = false
     }
     
+    // MARK: - Statistics
+    
+    func computeStatistics() {
+        self.resetStatistics()
+        for (_, model) in self.data {
+            for (_, manager) in self.statistics {
+                manager.isComputed = true
+                manager.insert(stat: manager.handler(model))
+            }
+        }
+    }
+    
+    func resetStatistics() {
+        for (_, manager) in self.statistics {
+            manager.reset()
+        }
+    }
 }

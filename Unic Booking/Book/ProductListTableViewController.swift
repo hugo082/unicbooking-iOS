@@ -19,6 +19,9 @@ class ProductListTableViewController: UITableViewController {
     @IBOutlet var filterBBI: UIBarButtonItem!
     @IBOutlet var filterDateBBI: UIBarButtonItem!
     
+    @IBOutlet var dayTotal: UILabel!
+    @IBOutlet var monthTotal: UILabel!
+    
     var products: [Product]?
     var data: [[Product]]?
     var selectedProduct: Product?
@@ -40,10 +43,9 @@ class ProductListTableViewController: UITableViewController {
         
         DataManager.shared.productManager.getData() { products, error in
             if let error = error {
-                debugPrint(error)
                 self.showErrorAlert(title: "Loading error", error: error)
             } else {
-                self.reorderData(products)
+                self.filter()
             }
         }
     }
@@ -64,12 +66,15 @@ class ProductListTableViewController: UITableViewController {
     
     @IBAction func filterDateAction(_ sender: UIBarButtonItem) {
         if self.filters.1 == .today {
-            self.filters.1 = .month
-            self.filterDateBBI.image = #imageLiteral(resourceName: "icn_calendar_month")
+            self.filter(by: .month)
         } else {
-            self.filters.1 = .today
-            self.filterDateBBI.image = #imageLiteral(resourceName: "icn_calendar_check")
+            self.filter(by: .today)
         }
+    }
+    
+    func filter(by dateFilter: DateFilter) {
+        self.filters.1 = dateFilter
+        self.filterDateBBI.image = dateFilter == .today ? #imageLiteral(resourceName: "icn_calendar_check") : #imageLiteral(resourceName: "icn_calendar_month")
         self.filter()
     }
     
@@ -79,10 +84,11 @@ class ProductListTableViewController: UITableViewController {
     }
     
     func filter() {
+        DataManager.shared.productManager.computeStatistics()
         let products: [Product]
         products = DataManager.shared.productManager.filter() { product in
-            if self.filters.1 == .today && !Calendar.current.isDateInToday(product.date) {
-                return false
+            if self.filters.1 == .today {
+                return Calendar.current.isDateInToday(product.date)
             } else if let type = self.filters.0 {
                 return product.type.service.type == type
             }
@@ -109,6 +115,7 @@ class ProductListTableViewController: UITableViewController {
             }
         }
         self.data?.append(buf)
+        self.updateTabView()
         self.tableView.reloadData()
     }
     
@@ -159,5 +166,21 @@ class ProductListTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    @IBAction func dayListAction(_ sender: UIButton) {
+        self.filter(by: .today)
+    }
+    
+    @IBAction func monthListAction(_ sender: UIButton) {
+        self.filter(by: .month)
+    }
+    
+    // MARK: - Tab View
+    
+    func updateTabView() {
+        let stats = DataManager.shared.productManager.statistics
+        self.dayTotal.text = "\(stats["day"]?.getResult() ?? 0) \n Today"
+        self.monthTotal.text = "\(stats["month"]?.getResult() ?? 0) \n Month"
+    }
+    
 }

@@ -16,8 +16,12 @@ class DataManager {
     var bookManager: ModelManager<Book>
     
     init(){
-        self.productManager = ModelManager<Product>()
         self.bookManager = ModelManager<Book>()
+        self.productManager = ModelManager<Product>()
+        self.productManager.statistics = [
+            "month": self.monthStatistic(),
+            "day": self.dayStatistic()
+        ]
     }
     
     func manager<Type>(object: Type.Type) -> ModelManager<Type>? {
@@ -36,5 +40,17 @@ class DataManager {
         Credential.destroy()
         self.productManager.clean()
         self.bookManager.clean()
+    }
+    
+    func dayStatistic() -> StatisticManager<Product, Int> {
+        return StatisticManager<Product, Int>() { product in
+            return Calendar.current.isDateInToday(product.date) ? 1 : 0
+        }
+    }
+    
+    func monthStatistic() -> StatisticManager<Product, Int> {
+        return StatisticManager<Product, Int>() { product in
+            return Calendar.current.isDate(product.date, equalTo: Date(), toGranularity: Calendar.Component.month) ? 1 : 0
+        }
     }
 }

@@ -102,6 +102,65 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="2XM-Ex-RKP">
+                            <rect key="frame" x="0.0" y="114" width="375" height="58"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdf-1V-t9s">
+                                    <rect key="frame" x="191.5" y="8" width="92.5" height="42"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8y-g6-rTE">
+                                    <rect key="frame" x="292" y="8" width="75" height="42"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Month">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="monthListAction:" destination="8Np-w7-qSS" eventType="touchUpInside" id="16s-Lv-Xyr"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rD-mR-6Nu">
+                                    <rect key="frame" x="8" y="8" width="75" height="42"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Day">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="dayListAction:" destination="8Np-w7-qSS" eventType="touchUpInside" id="4Il-wj-9Bh"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VgZ-uh-kpn">
+                                    <rect key="frame" x="91" y="8" width="92.5" height="42"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="A8y-g6-rTE" secondAttribute="bottom" constant="8" id="2ol-Br-XCu"/>
+                                <constraint firstItem="1rD-mR-6Nu" firstAttribute="width" secondItem="2XM-Ex-RKP" secondAttribute="width" multiplier="1/5" id="6R7-Ln-Jvo"/>
+                                <constraint firstItem="A8y-g6-rTE" firstAttribute="top" secondItem="2XM-Ex-RKP" secondAttribute="top" constant="8" id="Cxc-aj-Pvf"/>
+                                <constraint firstAttribute="bottom" secondItem="xdf-1V-t9s" secondAttribute="bottom" constant="8" id="GiO-yy-Nci"/>
+                                <constraint firstItem="xdf-1V-t9s" firstAttribute="leading" secondItem="VgZ-uh-kpn" secondAttribute="trailing" constant="8" id="I6X-mf-TMn"/>
+                                <constraint firstItem="1rD-mR-6Nu" firstAttribute="leading" secondItem="2XM-Ex-RKP" secondAttribute="leading" constant="8" id="Ilc-g1-ib1"/>
+                                <constraint firstItem="xdf-1V-t9s" firstAttribute="top" secondItem="2XM-Ex-RKP" secondAttribute="top" constant="8" id="NvB-29-lf2"/>
+                                <constraint firstItem="VgZ-uh-kpn" firstAttribute="leading" secondItem="1rD-mR-6Nu" secondAttribute="trailing" constant="8" id="SBv-vn-CLk"/>
+                                <constraint firstItem="A8y-g6-rTE" firstAttribute="width" secondItem="2XM-Ex-RKP" secondAttribute="width" multiplier="1/5" id="SlX-Fa-Aeb"/>
+                                <constraint firstItem="1rD-mR-6Nu" firstAttribute="top" secondItem="2XM-Ex-RKP" secondAttribute="top" constant="8" id="ZGq-WX-SPl"/>
+                                <constraint firstItem="A8y-g6-rTE" firstAttribute="leading" secondItem="xdf-1V-t9s" secondAttribute="trailing" constant="8" id="c1o-lf-D0A"/>
+                                <constraint firstAttribute="bottom" secondItem="1rD-mR-6Nu" secondAttribute="bottom" constant="8" id="fd0-PG-WzL"/>
+                                <constraint firstItem="VgZ-uh-kpn" firstAttribute="top" secondItem="2XM-Ex-RKP" secondAttribute="top" constant="8" id="kPv-h4-AbY"/>
+                                <constraint firstAttribute="trailing" secondItem="A8y-g6-rTE" secondAttribute="trailing" constant="8" id="lQw-lk-Yfd"/>
+                                <constraint firstAttribute="bottom" secondItem="VgZ-uh-kpn" secondAttribute="bottom" constant="8" id="qKq-dM-P2l"/>
+                                <constraint firstItem="xdf-1V-t9s" firstAttribute="width" secondItem="VgZ-uh-kpn" secondAttribute="width" id="s9s-F8-N4Q"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="product_cell" rowHeight="86" id="waL-Mc-Ee3" customClass="ProductTableViewCell" customModule="Unic_Booking" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="86"/>
@@ -230,9 +289,11 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="dayTotal" destination="VgZ-uh-kpn" id="x6d-aU-qaa"/>
                         <outlet property="filterBBI" destination="Alq-Qj-bE7" id="ARR-4q-TDx"/>
                         <outlet property="filterDateBBI" destination="qPn-Ht-Q0O" id="hA2-VQ-xV3"/>
                         <outlet property="logoutBBI" destination="gk5-Kg-aUf" id="0yv-Yn-Nri"/>
+                        <outlet property="monthTotal" destination="xdf-1V-t9s" id="6A9-DO-xvI"/>
                         <segue destination="z0Y-Ql-bTP" kind="show" identifier="product_details" id="ZsB-eD-49h"/>
                         <segue destination="BYZ-38-t0r" kind="showDetail" identifier="logout" id="VYy-Td-Gfn"/>
                     </connections>

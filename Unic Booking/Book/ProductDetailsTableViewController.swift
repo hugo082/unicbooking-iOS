@@ -101,17 +101,11 @@ class ProductDetailsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? ExecutionStepTableViewCell {
             if (cell.step?.isFinish ?? false) && self.product.execution.isStarted {
-                self.confirmFinish()
-                return
-            }
-            if (self.product.execution.complete(step: cell.step!)) {
-                ApiManager.shared.update(self.product.execution) { error in
-                    if let error = error {
-                        self.showErrorAlert(title: "Update Error", error: error)
-                        return
-                    }
-                    tableView.reloadData()
-                }
+                self.confirmFinish(step: cell.step!)
+            } else if cell.step?.tag == .addStop {
+                self.addStop()
+            } else {
+                self.updateState(step: cell.step!)
             }
         }
     }
@@ -145,13 +139,45 @@ class ProductDetailsTableViewController: UITableViewController {
         }
     }
     
-    func confirmFinish() {
+    func confirmFinish(step: Execution.Step) {
         let alert = UIAlertController(title: "Confirm", message: "Finish this mission", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
             self.product.finish()
+            self.updateState(step: step)
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func updateState(step: Execution.Step) {
+        if (self.product.execution.complete(step: step)) {
+            ApiManager.shared.update(self.product.execution) { error in
+                if let error = error {
+                    self.showErrorAlert(title: "Update Error", error: error)
+                    return
+                }
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func addStop() {
+        self.promptData(title: "Add stop", message: nil, cancel: "Cancel", placeholder: "Stop address", confirm: "Confirm") { data in
+            if let stop = data {
+                ApiManager.shared.limousineAddStop(self.product, stop: stop, completionHandler: { (_) in
+                    DataManager.shared.productManager.getData(with: self.product.id, force: true, completionHandler: { (product, error) in
+                        if let error = error {
+                            self.showErrorAlert(title: "Error Update", error: error)
+                        } else if let product = product {
+                            self.product = product
+                        }
+                        self.tableView.reloadData()
+                    })
+                })
+            } else {
+                self.showAlert(title: "Error", message: "Impossible to get Stop address")
+            }
+        }
     }
     
     @objc func refreshData(_ sender: UIRefreshControl) {

@@ -47,4 +47,19 @@ extension UIViewController {
     func showErrorAlert(title: String?, error: Error?) {
         self.showAlert(title: title, message: error?.localizedDescription)
     }
+    
+    func promptData(title: String?, message: String?, cancel: String?, placeholder: String?, confirm: String?,
+                    completion: @escaping (String?) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if let cancel = cancel {
+            alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = placeholder
+        }
+        alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { (action) in
+            completion(alert.textFields?.first?.text)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 }

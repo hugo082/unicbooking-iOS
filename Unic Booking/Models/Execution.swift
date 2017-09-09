@@ -15,6 +15,7 @@ class Execution: Model, Updatable, CustomStringConvertible {
         enum Tag: String, Decodable {
             case finish = "finish"
             case linkInfo = "link_info"
+            case addStop = "add_stop"
         }
         
         enum CodingKeys: String, CodingKey  {

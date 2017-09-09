@@ -21,6 +21,7 @@ class ApiManager {
     let loginEndPoint = "/login_check"
     let userDetailsEndPoint = "/user/detail"
     let executionDetailsEndPoint = "/execution/"
+    let limousineAddStopEndPoint = "/product/limousine/add/stop/"
     
     var headers: HTTPHeaders? {
         guard let token = Credential.shared?.token else { return nil }
@@ -74,6 +75,18 @@ class ApiManager {
                 completionHandler(nil, error)
                 break
             }
+        }
+    }
+    
+    // MARK: - Limousine
+    
+    func limousineAddStop(_ product: Product, stop: String, completionHandler: @escaping (Error?) -> Void) {
+        let url = baseURL + limousineAddStopEndPoint + String(product.id)
+        self.coreRequest(type: Product.self, url: url, method: .post, parameters: ["stop" : stop], encoding: URLEncoding.default, headers: self.headers) { object, error in
+            if let object = object {
+                product.update(from: object)
+            }
+            completionHandler(error)
         }
     }
     
